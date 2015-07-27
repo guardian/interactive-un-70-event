@@ -1,5 +1,5 @@
 /**
- * Project: Project name 
+ * Project: Project name
  * File:    Main SCSS
  */
 @import 'modules/_typography';
@@ -25,7 +25,7 @@ body {
 // Note: Access images using absolute '/imgs/' paths
 .gv-wrapper {
     margin: 0 auto;
-    
+
     // Breakpoints
     @include mq(tablet) {
         max-width: gs-span(9) + $gs-gutter*2;
@@ -46,18 +46,113 @@ body {
     }
 }
 
-.gv-header {
-    padding: 10px $gs-gutter;
-    margin: 0;
+
+
+.gv-event {
+  border: 1px;
+  box-sizing: border-box;
+  float: left;
+  height: 110px;
+  overflow: hidden;
+  display: block;
+  margin: 0 1px 1px 0;
+  color: #fff;
+  font-size: 12px;
+  font-family: sans-serif;
+  line-height: 1.3em;
+  position: relative;
+  cursor: pointer;
+  background-size: cover;
+
+  width: calc(33.33% - 1px);
+
+  @include mq(tablet) {
+    width: calc(20% - 1px);
+  }
+  @include mq(desktop) {
+    width: calc(10% - 1px);
+  }
+
+
+
+  &:hover .gv-event-inner-wrap {
+    background-color: rgba(255, 201, 33, 0.85);
+    color: rgba(0, 0, 0, 0.8);
+    transition: background-color 0.2s, color 0.2s;
+
+    .gv-event-year {
+        transition: color 0.2s;
+        color: rgba(0, 0, 0, 0.7);
+    }
+  }
+
+  p {
+      margin: 0;
+  }
 }
 
-.gv-guardian-logo {
-    float: right;
-    width: 80px;
+.gv-event-year {
+  font-family: serif;
+  font-size: 17px;
+  font-weight: bold;
+  float: right;
+  padding: 0 0 1px 4px;
+  line-height: 1em;
+  color: rgba(255, 255, 255, 0.5);
 }
 
-.gv-table {
-    margin: 10px auto;
-    max-width: 500px;
-    @include fs-textSans(3);
+.gv-event-inner-wrap {
+  background-color: rgba(0, 90, 255, 0.83);
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  padding: 5px 6px;
+}
+
+
+.intro {
+  .gv-event {
+    opacity: 0;
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-family: "Guardian Text Egyptian Web",Georgia,serif;
+
+
+
+      .gv-event-year {
+        font-size: 70px;
+        position: absolute;
+        top: calc(75% - 70px);
+        left: 30px;
+      }
+
+      .gv-event-text {
+        position: absolute;
+        top: 75%;
+        left: 30px;
+        padding: 0;
+        width: 80%
+      }
+
+
+      .gv-event-inner-wrap {
+        font-size: 53px;
+        line-height: 1.1em;
+        padding: 20px;
+        background: linear-gradient(to bottom, rgba(0, 90, 255,0.1)  0%,rgba(0, 90, 255,0.8) 64%, rgba(0, 90, 255,0.9) 100%);
+
+      }
+
+      &.active {
+        opacity: 1;
+        transition: opacity 0.2s;
+      }
+
+  }
+
 }

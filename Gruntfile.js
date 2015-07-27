@@ -36,6 +36,11 @@ module.exports = function (grunt) {
 
     webpack: {
       options: {
+        resolve: {
+          alias: {
+            // 'jquery': 'zepto'
+          }
+        },
         entry: './src/main.js',
         output: {
           path: './build/js/',
@@ -189,7 +194,7 @@ module.exports = function (grunt) {
     }
 
   });
-  
+
   // Hash files and replace references
   grunt.registerTask('cachebust', 'hash files, replace reference', function (target) {
     var port;
