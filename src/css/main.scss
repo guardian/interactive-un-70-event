@@ -22,9 +22,14 @@ body {
     margin: 0;
 }
 
+.gv-header {
+  margin: 0;
+}
+
 // Note: Access images using absolute '/imgs/' paths
 .gv-wrapper {
     margin: 0 auto;
+    overflow: hidden;
 
     // Breakpoints
     @include mq(tablet) {
@@ -47,6 +52,23 @@ body {
 }
 
 
+.gv-event-modal {
+  width: 100%;
+  background-color: #fec;
+  box-sizing: border-box;
+  padding: 10px 20px;
+}
+
+.modal-open .gv-event {
+  width: calc((100% / 71) - 1px);
+  height: 50px;
+  opacity: 0.2;
+}
+
+.modal-open .gv-event.active {
+  opacity: 1;
+}
+
 
 .gv-event {
   border: 1px;
@@ -64,7 +86,14 @@ body {
   cursor: pointer;
   background-size: cover;
 
+  opacity: 0;
+
   width: calc(33.33% - 1px);
+
+
+  .gv-event-modal {
+    display: none;
+  }
 
   @include mq(tablet) {
     width: calc(20% - 1px);
@@ -76,7 +105,7 @@ body {
 
 
   &:hover .gv-event-inner-wrap {
-    background-color: rgba(255, 201, 33, 0.85);
+    background-color: rgba(214, 214, 214, 0.85);
     color: rgba(0, 0, 0, 0.8);
     transition: background-color 0.2s, color 0.2s;
 
@@ -88,6 +117,14 @@ body {
 
   p {
       margin: 0;
+  }
+
+
+  &.clicked {
+    transform: scale(3.0089);
+    z-index: 100000;
+    transition: all 0.2s;
+    transform-origin: 100% 50%;
   }
 }
 
@@ -111,16 +148,33 @@ body {
   padding: 5px 6px;
 }
 
+.gv-wrapper {
+  position: relative;
+  min-height: 100vh;
+}
+
+.grid {
+
+  * {
+      opacity: 1;
+      transition: none !important;
+      transition-delay: 0s !important;
+  }
+}
 
 .intro {
   .gv-event {
-    opacity: 0;
+
     width: 100%;
     height: 100vh;
     position: absolute;
     top: 0;
     left: 0;
     font-family: "Guardian Text Egyptian Web",Georgia,serif;
+
+    opacity: 1;
+    transition-property: opacity;
+    transition-duration:  0.02s;
 
 
 
@@ -148,11 +202,40 @@ body {
 
       }
 
-      &.active {
-        opacity: 1;
-        transition: opacity 0.2s;
-      }
-
   }
 
+}
+
+
+.gv-btn {
+  border: none;
+  padding: 10px 29px;
+  font-size: 20px;
+  background-color: #FFDA00;
+  cursor: pointer;
+}
+
+.gv-btn-skip {
+  position: absolute;
+  z-index: 100;
+  bottom: 10%;
+  right: 10px;
+}
+
+
+
+.war .gv-event-inner-wrap {
+  background-color: rgba(82, 63, 56, 0.83);
+}
+
+.gen .gv-event-inner-wrap {
+  background-color: rgba(89, 74, 101, 0.83);
+}
+
+.health .gv-event-inner-wrap {
+  background-color: rgba(52, 74, 50, 0.83);
+}
+
+.refugee .gv-event-inner-wrap {
+  background-color: rgba(50, 70, 103, 0.83);
 }
