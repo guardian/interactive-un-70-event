@@ -1,14 +1,15 @@
-<div class="gv-event-inner-wrap">
-	<p class="gv-event-year"> <%= YEAR %> </p>
-	<p class="gv-event-text"> <%= EVENT %> </p>
-</div>
+<p class="gv-event-year"> {{ YEAR }} </p>
+<div class="gv-event-inner-wrap gv-event-scale-{{ Hierarchy }}">
+	<p class="gv-event-text"> {{ HEADLINE }} </p>
+    <div class="gv-event-content">
+        <p class="gv-event-copy"> {{ EVENT }} </p>
 
-<div class="gv-event-modal">
-	<h1> <%= EVENT %> </h1>
-		<h2>  <%= YEAR %>  </h2>
-	<p> fnkjnkjfn jkdfn jknfgjk fdjkgn jkfdng kfng jknfdjkgn jkfng jkfng n</p>
-	<p> fnkjnkjfn jkdfn jknfgjk fdjkgn jkfdng kfng jknfdjkgn jkfng jkfng n</p>
-	<p> fnkjnkjfn jkdfn jknfgjk fdjkgn jkfdng kfng jknfdjkgn jkfng jkfng n</p>
+        {{#VIDEO}}
+            <video width="640" height="320" class="gv-event-video"></video>
+        {{/VIDEO}}
 
-	<img src="https://placeholdit.imgix.net/~text?txtsize=28&txt=300%C3%97300&w=300&h=300" />
+        {{#IMAGES}}
+            <img src="{{ . }}" width="640" alt="" class="gv-event-images" />
+        {{/IMAGES}}
+    </div>
 </div>

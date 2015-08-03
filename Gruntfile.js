@@ -37,8 +37,8 @@ module.exports = function (grunt) {
     webpack: {
       options: {
         resolve: {
-          alias: {
-            // 'jquery': 'zepto'
+        alias: {
+            "backbone": "exoskeleton"
           }
         },
         entry: './src/main.js',
@@ -51,7 +51,11 @@ module.exports = function (grunt) {
         module: {
           loaders: [
             { test: /\.(html|txt|css)$/, loader: 'raw-loader' },
-            { test: /\.json$/, loader: "json-loader" }
+            { test: /\.json$/, loader: "json-loader" },
+            {
+                test: require.resolve("exoskeleton"),
+                loader: "imports?define=>false"
+            }
           ]
         }
       },
