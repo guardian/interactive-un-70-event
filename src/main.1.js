@@ -11,15 +11,11 @@ Mustache.parse(modalHTML);
 var EventCollection = Backbone.Collection.extend({
 
 	url: 'http://interactive.guim.co.uk/docsdata-test/' +
-		 '1YZKHghxCPhxbJH65K0GxzDb9-Id2t5O8hTxLw9jyN_w.json',
+		 '1BbsWwQGxaIcuQYnHCE6m697qx6klTe_jOm8E93NgRLk.json',
 
 	parse: function(json) {
-
-		if ( !json || !json.hasOwnProperty('sheets') || json.hasOwnProperty('data') ) {
-			return console.warn('Unexpected JSON data', json);
-		}
-
-		return json.sheets.data.map(function(item) {
+        
+		return json[0].map(function(item) {
             if (item.IMAGES) {
                 item.IMAGES = item.IMAGES.replace('"', '');
                 item.IMAGES = item.IMAGES.split(',');
@@ -41,16 +37,11 @@ var EventView = Backbone.NativeView.extend({
     },
 
 	activate: function(model) {
-		if (this.el.classList.contains('active') ) {
-			this.el.classList.remove('active');
-			return;
-		}
+        if (this.model !== model) {
+            console.log(this.model, model);
+            return this.deactivate();
+        }
 
-
-		console.log('in here', this);
-		this.parent.eventViews.forEach(function(item) {
-			item.el.classList.remove('active');
-		});
 		this.el.classList.add('active');
 	},
 
@@ -60,21 +51,21 @@ var EventView = Backbone.NativeView.extend({
 
 	render: function() {
 		var index = this.model.collection.indexOf(this.model);
-		this.el.innerHTML = Mustache.render(eventHTML, this.model.attributes);
+		this.el.innerHTML = Mustache.render(eventHTML, this.model.attributes); 
 
-		var categoryName = this.model.get('CATEGORY');
-		if (categoryName && categoryName.trim().length < 1) {
-			categoryName = 'unknown';
-		}
-
-		this.el.classList.add( categoryName );
-		this.el.style.backgroundImage = 'url(http://lorempixel.com/g/200/200/?' + Date.now() * Math.random() + ')';
+		// var categoryName = this.model.get('CATEGORY');
+		// if (categoryName.trim().length < 1) {
+		// 	categoryName = 'unknown';
+		// }
+        //
+		// this.el.classList.add( categoryName );
+		// this.el.style.backgroundImage = 'url(http://lorempixel.com/g/200/200/?' + Date.now() + ')';
 		this.el.style.zIndex = index;
 		this.el.style.transitionDelay = (index * 100) + 'ms' ;
-		this.el.addEventListener('click', this.activate.bind(this), false);
-		// this.el.addEventListener('click', function() {
-        //     dispatcher.trigger('modalopen', this.model);
-        // }.bind(this), false) ;
+		// this.el.addEventListener('click', this.activate.bind(this), false);
+		this.el.addEventListener('click', function() {
+            dispatcher.trigger('modalopen', this.model);
+        }.bind(this), false) ;
 
 		return this;
 	}
@@ -133,7 +124,7 @@ var BaseView = Backbone.NativeView.extend({
 		this.el.classList.add('grid');
 		this.skipbtn.parentNode.removeChild( this.skipbtn );
 		this.eventViews.forEach(function(item) {
-				item.el.style.transitionDelay = '';
+				item.el.style.transitionDelay = '0ms';
 		}.bind(this) );
 	},
 
@@ -150,11 +141,10 @@ var BaseView = Backbone.NativeView.extend({
 		this.skipbtn.addEventListener('click', this.skip.bind(this), false);
 
 		this.introTimeout = setTimeout(this.skip.bind(this), 7 * 1000);
-
-
+        
+        
         this.eventViews = this.collection.map(function(eventModel) {
 			var eventView = new EventView({ model: eventModel });
-			eventView.parent = this;
             this.wrapperEl.appendChild( eventView.render().el );
             return eventView;
 		}, this);
@@ -163,9 +153,9 @@ var BaseView = Backbone.NativeView.extend({
             el: this.el.querySelector('.gv-event-modal')
         });
         this.modalView.render();
-		//this.el.classList.add('grid');
+		this.el.classList.add('grid');
 
-		setTimeout(this.startIntro, 200);
+		// setTimeout(this.startIntro, 200);
 	}
 
 });
