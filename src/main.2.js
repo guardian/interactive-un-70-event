@@ -58,57 +58,27 @@ var EventView = Backbone.NativeView.extend({
     },
 
 	activate: function(model) {
-		// if (this.el.classList.contains('active') ) {
-		// 	this.el.classList.remove('active');
-		// 	// this.parent.eventViews.forEach(function(item) {
-		// 	// 	item.el.style.height = '';
-		// 	// });
-		// 	return;
-		// }
-
+		if (this.el.classList.contains('active') ) {
+			this.el.classList.remove('active');
+			// this.parent.eventViews.forEach(function(item) {
+			// 	item.el.style.height = '';
+			// });
+			return;
+		}
 
 		var targetIndex = this.parent.eventViews.indexOf(this);
 
-		this.parent.eventViews.forEach( function(card, index) {
-			card.el.classList.remove('next');
-			card.el.classList.remove('active');
-			card.el.classList.remove('delt');
 
-			if (index === targetIndex - 1) {
-				card.el.classList.add('next');
+		this.parent.eventViews.forEach(function(item, index) {
+			item.el.classList.remove('active');
+			var indexDelta =  Math.abs(targetIndex - index);
+			if ( indexDelta < 7 ) {
+				item.el.style.height = 30 * (1 / indexDelta) + 'px' ;
+			} else {
+				item.el.style.height = '';
 			}
-
-			if (index === targetIndex + 1 ) {
-				card.el.classList.add('delt');
-			}
-
-
 		});
-
 		this.el.classList.add('active');
-
-
-		// if (targetIndex + 1 < this.parent.eventViews.length) {
-		// 	this.parent.eventViews[targetIndex + 1].el.classList.add('delt');
-		// }
-
-		// if (targetIndex - 1 > -1) {
-		// 	this.parent.eventViews[targetIndex - 1].el.classList.add('next');
-		// }
-
-
-
-		// this.parent.eventViews.forEach(function(item, index) {
-		// 	item.el.classList.remove('active');
-		// 	var indexDelta =  Math.abs(targetIndex - index);
-		// 	if ( indexDelta < 7 ) {
-		// 		item.el.style.left = 30 * (1 / indexDelta) + 'px' ;
-		// 	} else {
-		// 		item.el.style.left = '';
-		// 	}
-		// });
-
-		// this.el.classList.add('active');
 	},
 
 	deactivate: function() {
@@ -128,7 +98,7 @@ var EventView = Backbone.NativeView.extend({
 		this.el.style.backgroundImage = 'url(http://lorempixel.com/g/200/200/?' + Date.now() * Math.random() + ')';
 		this.el.style.zIndex = index;
 		this.el.style.transitionDelay = (index * 100) + 'ms' ;
-		// this.el.addEventListener('click', this.activate.bind(this), false);
+		this.el.addEventListener('click', this.activate.bind(this), false);
 		// this.el.addEventListener('click', function() {
         //     dispatcher.trigger('modalopen', this.model);
         // }.bind(this), false) ;
@@ -194,7 +164,7 @@ var BaseView = Backbone.NativeView.extend({
 		}.bind(this) );
 
 		this.hammer.get('pan').set({ direction: Hammer.DIRECTION_HORIZONTAL });
-		this.hammer.on('panleft panright panend', this.pan.bind(this) );
+		this.hammer.on('panleft drag panright tap press swipe', this.pan.bind(this) );
 	},
 
 	startIntro: function() {
@@ -203,42 +173,12 @@ var BaseView = Backbone.NativeView.extend({
 
 	pan: function(ev) {
 		ev.preventDefault();
-
-
-
-
-		var index = Math.round( Math.exp( (Math.abs(ev.deltaX) / this.stepWidth) / 8 )  );
+		var index = Math.abs( Math.round( ev.center.x / this.stepWidth ) );
 		console.log(index);
-		// this.currentIndex += index;
-		// console.log(this.currentIndex, index);
 
-
-
-		if ( isNaN( index ) ) {
-			return;
-		}
-		if (ev.deltaX < 0) {
-			index *= -1;
-		}
-
-		if (this.currentIndex + index > 70 ) {
-			return
-		}
-
-		if ( this.currentIndex + index < 0 ) {
-			return;
-		}
-
-
-		var target = this.eventViews[ this.currentIndex  + index];
-		target.activate();
-
-		console.log(ev);
-
-		if (ev.type === 'panend') {
-			this.currentIndex += index;
-			console.log('Current index', this.currentIndex);
-		}
+		// if ( ev.target.classList.contains('active') ) {
+		// 	return;
+		// }
 
 		// var yPos = ev.center.y;
 		// var nearest;
@@ -252,11 +192,6 @@ var BaseView = Backbone.NativeView.extend({
 		// }.bind(this));
 
 		// nearest.activate();
-
-
-		// if ( ev.target.classList.contains('active') ) {
-		// 	return;
-		// }
 
 	},
 
@@ -289,7 +224,6 @@ var BaseView = Backbone.NativeView.extend({
 		console.log(this.el);
 		this.elWidth = this.el.getBoundingClientRect().width;
 		this.stepWidth = this.elWidth / this.collection.length;
-		this.currentIndex = this.collection.length
 		this.hammer = new Hammer(this.el, { drag_lock_to_axis: true });
 
 
