@@ -15,6 +15,8 @@
 body {
     margin: 0;
     padding: 0;
+    overflow: hidden;
+    height: 100%;
 }
 
 // Remove <figure> margin
@@ -186,18 +188,18 @@ body {
     position: relative;
     margin-top: -30px;
     overflow: visible;
-    transition: 0.2s margin, 0.2s transform, ;
+    transition: 0.2s margin, 0.2s transform, 0.2s height;
     margin-top: 0;
 
     -webkit-tap-highlight-color: rgba(0,0,0,0);
     -webkit-tap-highlight-color: transparent;
 
     &.active {
-      transform: rotateX( 0 ) translateY(-67px);
+      transform: rotateX( 0 ) translateY(0px);
     }
 
     &.active + div {
-      margin-top: 160px;
+      margin-top: 220px;
     }
    }
 

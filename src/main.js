@@ -2,11 +2,28 @@ var Backbone = require('exoskeleton');
 Backbone.NativeView = require('backbone.nativeview');
 Backbone.ajax = require('backbone.nativeajax');
 var dispatcher = Object(Backbone.Events);
+var Hammer = require('hammerjs');
 var eventHTML = require('./html/event.html');
 var modalHTML = require('./html/modal.html');
 var Mustache = require('mustache');
 Mustache.parse(eventHTML);
 Mustache.parse(modalHTML);
+
+
+function debounce(func, wait, immediate) {
+	var timeout;
+	return function() {
+		var context = this, args = arguments;
+		var later = function() {
+			timeout = null;
+			if (!immediate) func.apply(context, args);
+		};
+		var callNow = immediate && !timeout;
+		clearTimeout(timeout);
+		timeout = setTimeout(later, wait);
+		if (callNow) func.apply(context, args);
+	};
+};
 
 var EventCollection = Backbone.Collection.extend({
 
@@ -43,13 +60,23 @@ var EventView = Backbone.NativeView.extend({
 	activate: function(model) {
 		if (this.el.classList.contains('active') ) {
 			this.el.classList.remove('active');
+			// this.parent.eventViews.forEach(function(item) {
+			// 	item.el.style.height = '';
+			// });
 			return;
 		}
 
+		var targetIndex = this.parent.eventViews.indexOf(this);
 
-		console.log('in here', this);
-		this.parent.eventViews.forEach(function(item) {
+
+		this.parent.eventViews.forEach(function(item, index) {
 			item.el.classList.remove('active');
+			var indexDelta =  Math.abs(targetIndex - index);
+			if ( indexDelta < 7 ) {
+				item.el.style.height = 30 * (1 / indexDelta) + 'px' ;
+			} else {
+				item.el.style.height = '';
+			}
 		});
 		this.el.classList.add('active');
 	},
@@ -135,10 +162,35 @@ var BaseView = Backbone.NativeView.extend({
 		this.eventViews.forEach(function(item) {
 				item.el.style.transitionDelay = '';
 		}.bind(this) );
+
+		this.hammer.get('pan').set({ direction: Hammer.DIRECTION_VERTICAL });
+		this.hammer.on('panup drag pandown tap press swipe', this.pan.bind(this) );
 	},
 
 	startIntro: function() {
 		this.el.classList.add('intro');
+	},
+
+	pan: function(ev) {
+		ev.preventDefault();
+		console.log(ev);
+		if ( ev.target.classList.contains('active') ) {
+			return;
+		}
+
+		var yPos = ev.center.y;
+		var nearest;
+		var distance = 10000;
+		this.eventViews.forEach(function( item ) {
+			var delta = Math.abs( yPos - item.el.getBoundingClientRect().top);
+			if ( delta < distance ) {
+				distance = delta;
+				nearest = item;
+			}
+		}.bind(this));
+
+		nearest.activate();
+
 	},
 
 	render: function() {
@@ -166,6 +218,11 @@ var BaseView = Backbone.NativeView.extend({
 		//this.el.classList.add('grid');
 
 		setTimeout(this.startIntro, 200);
+
+
+		this.hammer = new Hammer(this.el, { drag_lock_to_axis: true });
+
+
 	}
 
 });
