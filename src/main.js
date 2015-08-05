@@ -203,34 +203,24 @@ var BaseView = Backbone.NativeView.extend({
 
 	pan: function(ev) {
 		ev.preventDefault();
-		var index = Math.round(  (Math.abs(ev.deltaX) / this.stepWidth)   );
-
+		var index = Math.round( ev.deltaX / this.stepWidth );
 
 		if ( isNaN( index ) ) {
 			return;
 		}
-		if (ev.deltaX < 0) {
-			index *= -1;
-		}
 
-		if (this.currentIndex + index > 70 ) {
-			return
-		}
+		var newIndex = this.currentIndex  + index;
+		newIndex = (newIndex > 70 ) ? 70 : newIndex;
+		newIndex = (newIndex < 0 ) ? 0 : newIndex;
 
-		if ( this.currentIndex + index < 0 ) {
-			return;
-		}
-
-
-		var target = this.eventViews[ this.currentIndex  + index ];
+		var target = this.eventViews[ newIndex];
 		target.activate();
 
-		var percentage = ( (this.currentIndex  + index)  / (this.collection.models.length - 1) ) * 100;
+		var percentage = ( newIndex  / (this.collection.models.length - 1) ) * 100;
 		this.markerEl.style.left = 'calc( ' + Math.round( percentage ) + '% - 6px)';
 
 		if (ev.type === 'panend') {
-			this.currentIndex += index;
-			console.log('Current index', this.currentIndex);
+			this.currentIndex = newIndex;
 		}
 
 	},
