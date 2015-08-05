@@ -138,31 +138,31 @@ var EventView = Backbone.NativeView.extend({
 
 });
 
-var ModalView = Backbone.NativeView.extend( {
+// var ModalView = Backbone.NativeView.extend( {
 
-    initialize: function() {
-        dispatcher.on('modalopen', this.show, this);
-    },
+//     initialize: function() {
+//         dispatcher.on('modalopen', this.show, this);
+//     },
 
-	show: function( model ) {
-        console.log(model, this);
-	    this.innerEl.innerHTML = Mustache.render(modalHTML, (model) ? model.attributes : {} );
-		this.el.classList.add( 'active' );
-	},
+// 	show: function( model ) {
+//         console.log(model, this);
+// 	    this.innerEl.innerHTML = Mustache.render(modalHTML, (model) ? model.attributes : {} );
+// 		this.el.classList.add( 'active' );
+// 	},
 
-	hide: function() {
-		this.el.classList.remove( 'active' );
-        dispatcher.trigger('modalclose');
-	},
+// 	hide: function() {
+// 		this.el.classList.remove( 'active' );
+//         dispatcher.trigger('modalclose');
+// 	},
 
-	render: function() {
-        this.innerEl = this.el.querySelector('.gv-event-modal-inner');
-        this.closeEl = this.el.querySelector('.gv-event-modal-close');
-        this.closeEl.addEventListener( 'click', this.hide.bind(this), false );
-	    return this;
-	}
+// 	render: function() {
+//         this.innerEl = this.el.querySelector('.gv-event-modal-inner');
+//         this.closeEl = this.el.querySelector('.gv-event-modal-close');
+//         this.closeEl.addEventListener( 'click', this.hide.bind(this), false );
+// 	    return this;
+// 	}
 
-} );
+// } );
 
 
 var BaseView = Backbone.NativeView.extend({
@@ -203,15 +203,7 @@ var BaseView = Backbone.NativeView.extend({
 
 	pan: function(ev) {
 		ev.preventDefault();
-
-
-
-
-		var index = Math.round( Math.exp( (Math.abs(ev.deltaX) / this.stepWidth) / 8 )  );
-		console.log(index);
-		// this.currentIndex += index;
-		// console.log(this.currentIndex, index);
-
+		var index = Math.round(  (Math.abs(ev.deltaX) / this.stepWidth)   );
 
 
 		if ( isNaN( index ) ) {
@@ -230,40 +222,23 @@ var BaseView = Backbone.NativeView.extend({
 		}
 
 
-		var target = this.eventViews[ this.currentIndex  + index];
+		var target = this.eventViews[ this.currentIndex  + index ];
 		target.activate();
 
-		console.log(ev);
+		var percentage = ( (this.currentIndex  + index)  / (this.collection.models.length - 1) ) * 100;
+		this.markerEl.style.left = 'calc( ' + Math.round( percentage ) + '% - 6px)';
 
 		if (ev.type === 'panend') {
 			this.currentIndex += index;
 			console.log('Current index', this.currentIndex);
 		}
 
-		// var yPos = ev.center.y;
-		// var nearest;
-		// var distance = 10000;
-		// this.eventViews.forEach(function( item ) {
-		// 	var delta = Math.abs( yPos - item.el.getBoundingClientRect().top);
-		// 	if ( delta < distance ) {
-		// 		distance = delta;
-		// 		nearest = item;
-		// 	}
-		// }.bind(this));
-
-		// nearest.activate();
-
-
-		// if ( ev.target.classList.contains('active') ) {
-		// 	return;
-		// }
-
 	},
 
 	render: function() {
 		this.el.innerHTML = this.html;
-		this.wrapperEl = this.el.querySelector( '.gv-wrapper' );
 		this.overlayEl = this.el.querySelector( '.gv-wrapper-overlay' );
+		this.markerEl = this.el.querySelector( '.gv-timeline-marker' );
 
 		this.skipbtn = this.el.querySelector('.gv-btn-skip');
 		this.skipbtn.addEventListener('click', this.skip.bind(this), false);
@@ -274,25 +249,16 @@ var BaseView = Backbone.NativeView.extend({
         this.eventViews = this.collection.map(function(eventModel) {
 			var eventView = new EventView({ model: eventModel });
 			eventView.parent = this;
-            this.wrapperEl.appendChild( eventView.render().el );
+            this.el.appendChild( eventView.render().el );
             return eventView;
 		}, this);
 
-        this.modalView = new ModalView({
-            el: this.el.querySelector('.gv-event-modal')
-        });
-        this.modalView.render();
-		//this.el.classList.add('grid');
-
 		setTimeout(this.startIntro, 200);
 
-		console.log(this.el);
 		this.elWidth = this.el.getBoundingClientRect().width;
 		this.stepWidth = this.elWidth / this.collection.length;
 		this.currentIndex = this.collection.length
 		this.hammer = new Hammer(this.el, { drag_lock_to_axis: true });
-
-
 	}
 
 });
