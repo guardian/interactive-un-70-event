@@ -1,4 +1,12 @@
 
+& {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+
 .gv-event-year {
     font-weight: 700;
     float: left;
@@ -149,7 +157,7 @@
     border-radius: 2px;
     padding: 20px;
     height: calc(100% - 20px);
-    width: 250px;
+    width: calc(100vw - 70px);
     overflow: hidden;
     position: relative;
     box-sizing: border-box;
@@ -283,9 +291,31 @@
   right: 0;
   background-size: cover;
   background-image: url('/imgs/card.png');
-  z-index: -1;
+  z-index: 1;
 }
 
 .gv-event-overlay-shiny {
   background-image: url('/imgs/gloss-card.png');
+}
+
+
+.gv-event-tv {
+  position: relative;
+  padding: 2vw;
+}
+
+.gv-event-tv-screen {
+    background-image: url(/imgs/tv.svg);
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    left: 0;
+}
+
+.grayscale {
+    filter: url("data:image/svg+xml;utf8,&lt;svg xmlns=\'http://www.w3.org/2000/svg\'&gt;&lt;filter id=\'grayscale\'&gt;&lt;feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/&gt;&lt;/filter&gt;&lt;/svg&gt;#grayscale"); /* Firefox 10+, Firefox on Android */
+    filter: gray; /* IE6-9 */
+    -webkit-filter: grayscale(100%); /* Chrome 19+, Safari 6+, Safari 6+ iOS */
 }

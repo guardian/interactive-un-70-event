@@ -112,6 +112,22 @@ var BaseView = Backbone.NativeView.extend({
 		}
 	},
 
+	navNext: function() {
+		if (this.currentIndex + 1 >= this.collection.length) {
+			return;
+		}
+		this.currentIndex += 1;
+		this.showCard(this.currentIndex , true );
+	},
+
+	navPrevious: function() {
+		if (this.currentIndex - 1 < 0) {
+			return;
+		}
+		this.currentIndex -= 1;
+		this.showCard(this.currentIndex , true );
+	},
+
 
 	render: function() {
 		this.el.innerHTML = this.html;
@@ -124,6 +140,7 @@ var BaseView = Backbone.NativeView.extend({
 			eventView.parent = this;
             this.el.appendChild( eventView.render().el );
 
+			eventView.innerEl.setAttribute('style', '-webkit-filter: grayscale(' + (1 - i / (arr.length -1 ) ) * 100 + '%)' );
 			eventView.innerEl.style.backgroundColor = scale( i / (arr.length -1 ) ).hex();
 
 			eventView.overlayEl.style.opacity =  1 - i / (arr.length -1 );
@@ -140,7 +157,17 @@ var BaseView = Backbone.NativeView.extend({
 		this.hammer.get('pan').set({ direction: Hammer.DIRECTION_HORIZONTAL });
 		this.hammer.on('panleft panright panend', this.pan.bind(this) );
 
-		this.showCard(this.collection.length - 1, true);
+
+		this.currentIndex = this.collection.length - 1;
+		this.showCard(this.currentIndex, true);
+
+
+		this.nextBtn = this.el.querySelector('.gv-nav-next');
+		this.nextBtn.addEventListener('click', this.navNext.bind(this), false);
+
+		this.previousBtn = this.el.querySelector('.gv-nav-previous');
+		this.previousBtn.addEventListener('click', this.navPrevious.bind(this), false);
+
 	}
 
 });
