@@ -92,10 +92,20 @@ var BaseView = Backbone.NativeView.extend({
 		this.el.classList.add('gv-70');
 	},
 
+	stopAnimation: function() {
+		if ( this.animInterval ) {
+			clearInterval( this.animInterval );
+			this.animInterval = null;
+			this.el.classList.remove('animating');
+		}
+	},
+
 	pan: function(ev) {
 		ev.preventDefault();
+		this.stopAnimation();
 		var index = Math.round( ev.deltaX / this.stepWidth );
 		if ( isNaN( index ) ) { return; }
+		index *= -1;
 
 		var newIndex = this.currentIndex  + index;
 		newIndex = (newIndex > 70 ) ? 70 : newIndex;
@@ -113,6 +123,7 @@ var BaseView = Backbone.NativeView.extend({
 	},
 
 	navNext: function() {
+		this.stopAnimation();
 		if (this.currentIndex + 1 >= this.collection.length) {
 			return;
 		}
@@ -121,6 +132,7 @@ var BaseView = Backbone.NativeView.extend({
 	},
 
 	navPrevious: function() {
+		this.stopAnimation();
 		if (this.currentIndex - 1 < 0) {
 			return;
 		}
@@ -128,6 +140,14 @@ var BaseView = Backbone.NativeView.extend({
 		this.showCard(this.currentIndex , true );
 	},
 
+
+	animate: function() {
+		if (this.currentIndex + 1 >= this.collection.length) {
+			return this.showCard(0 , true );
+		}
+		this.currentIndex += 1;
+		this.showCard(this.currentIndex , true );
+	},
 
 	render: function() {
 		this.el.innerHTML = this.html;
@@ -158,8 +178,14 @@ var BaseView = Backbone.NativeView.extend({
 		this.hammer.on('panleft panright panend', this.pan.bind(this) );
 
 
-		this.currentIndex = this.collection.length - 1;
+		//this.currentIndex = this.collection.length - 1;
+		this.currentIndex = 0;
 		this.showCard(this.currentIndex, true);
+
+
+
+		this.el.classList.add('animating');
+		this.animInterval = setInterval(this.animate.bind(this), 3000);
 
 
 		this.nextBtn = this.el.querySelector('.gv-nav-next');
