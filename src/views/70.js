@@ -10,6 +10,7 @@ Mustache.parse(eventHTML);
 Mustache.parse(modalHTML);
 
 
+
 var EventCollection = Backbone.Collection.extend({
 
 	url: 'http://interactive.guim.co.uk/docsdata-test/' +
@@ -103,6 +104,7 @@ var BaseView = Backbone.NativeView.extend({
 	pan: function(ev) {
 		ev.preventDefault();
 		this.stopAnimation();
+
 		var index = Math.round( ev.deltaX / this.stepWidth );
 		if ( isNaN( index ) ) { return; }
 		index *= -1;
@@ -111,6 +113,7 @@ var BaseView = Backbone.NativeView.extend({
 		newIndex = (newIndex > 70 ) ? 70 : newIndex;
 		newIndex = (newIndex < 0 ) ? 0 : newIndex;
 		this.showCard( newIndex, ev.type === 'panend');
+
 	},
 
 	showCard: function(index, save) {
@@ -149,10 +152,16 @@ var BaseView = Backbone.NativeView.extend({
 		this.showCard(this.currentIndex , true );
 	},
 
+	hideIntro: function() {
+		this.introEl.classList.add('hide');
+	},
+
 	render: function() {
 		this.el.innerHTML = this.html;
-		this.overlayEl = this.el.querySelector( '.gv-wrapper-overlay' );
+		// this.overlayEl = this.el.querySelector( '.gv-wrapper-overlay' );
 		this.markerEl = this.el.querySelector( '.gv-timeline-marker' );
+
+
 
 		var scale = chroma.scale(['#EEE', '#B6E0FF']);
         this.eventViews = this.collection.map(function(eventModel, i, arr) {
@@ -160,11 +169,11 @@ var BaseView = Backbone.NativeView.extend({
 			eventView.parent = this;
             this.el.appendChild( eventView.render().el );
 
-			eventView.innerEl.setAttribute('style', '-webkit-filter: grayscale(' + (1 - i / (arr.length -1 ) ) * 100 + '%)' );
+			// eventView.innerEl.setAttribute('style', '-webkit-filter: grayscale(' + (1 - i / (arr.length -1 ) ) * 100 + '%)' );
 			eventView.innerEl.style.backgroundColor = scale( i / (arr.length -1 ) ).hex();
 
-			eventView.overlayEl.style.opacity =  1 - i / (arr.length -1 );
-			eventView.overlayShinyEl.style.opacity =  i / (arr.length -1 );
+			// eventView.overlayEl.style.opacity =  1 - i / (arr.length -1 );
+			// eventView.overlayShinyEl.style.opacity =  i / (arr.length -1 );
 
             return eventView;
 		}, this);
@@ -184,8 +193,8 @@ var BaseView = Backbone.NativeView.extend({
 
 
 
-		this.el.classList.add('animating');
-		this.animInterval = setInterval(this.animate.bind(this), 3000);
+		// this.el.classList.add('animating');
+		// this.animInterval = setInterval(this.animate.bind(this), 3000);
 
 
 		this.nextBtn = this.el.querySelector('.gv-nav-next');
@@ -193,6 +202,11 @@ var BaseView = Backbone.NativeView.extend({
 
 		this.previousBtn = this.el.querySelector('.gv-nav-previous');
 		this.previousBtn.addEventListener('click', this.navPrevious.bind(this), false);
+
+		this.introEl = this.el.querySelector('.gv-intro');
+		this.introEl.addEventListener('click', this.hideIntro.bind(this), false);
+		this.introEl.addEventListener('touchstart', this.hideIntro.bind(this), false);
+
 
 	}
 

@@ -77,7 +77,7 @@
   perspective: 430px;
   perspective-origin: 50% 0;
   background: none!important;
-  width: 0;
+  width: 100%;
   position: relative;
   overflow: visible;
   margin-top: 0;
@@ -93,7 +93,6 @@
   transform: scale(0.96) translateY(0px);
 
   &.active {
-    box-shadow: -6px 0 8px rgba(0,0,0,0.1);
     transform: scale(1) translateY(0px);
     left: 35px;
     z-index: 100 !important;
@@ -155,21 +154,17 @@
 
 
   .gv-event-inner-wrap {
+    pointer-events: none;
     // background: #ffedd2 !important;
     border: 1px solid rgba(0,0,0,.2);
     border-radius: 2px;
     padding: 20px;
     height: calc(100% - 20px);
-    width: calc(100vw - 70px);
+    width: calc(100% - 70px);
     overflow: hidden;
     position: relative;
     box-sizing: border-box;
-
-
-
     background-size: cover;
-    border-radius: 10px;
-
   }
 
   .gv-event-year {
@@ -204,6 +199,7 @@
     bottom: 10px;
     position: absolute;
     left: 10px;
+    pointer-events: none;
 }
 
 .gv-timeline-marker {
@@ -243,6 +239,10 @@
     top: -10px;
     position: absolute;
     line-height: 0;
+
+
+    &::-moz-selection { background: transparent; }
+    &::selection { background: transparent; }
 }
 
 .gv-timeline-end {
@@ -256,12 +256,13 @@
     width: 37%;
     height: 100%;
     bottom: 0;
-    z-index: 9999;
+    z-index: 105;
     cursor: pointer;
     text-indent: -9000px;
     overflow: hidden;
-
+    z-index: 105;
 }
+
 .gv-nav-next {
   right: 0px;
 }
@@ -307,3 +308,50 @@
     filter: gray; /* IE6-9 */
     -webkit-filter: grayscale(100%); /* Chrome 19+, Safari 6+, Safari 6+ iOS */
 }
+
+
+.gv-intro {
+    background-color: rgba(255, 255, 255, 0.94);
+    z-index: 110;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    font-size: 26px;
+    box-sizing: border-box;
+    padding: 20px;
+    opacity: 1;
+    transition: 100ms opacity;
+
+    &.hide {
+      opacity: 0;
+    }
+}
+
+
+@keyframes swipe {
+  0%   { transform: translate(-50%, -50%); }
+  70%   { transform: translate(-70%, -50%); }
+  100% { transform: translate(-50%, -50%); }
+}
+
+.gv-swipe-hint {
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  height: 140px;
+  width: 140px;
+  background-image: url(/imgs/swipe.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  transform: translate(-50%, -50%);
+  transform-origin: 50% 100%;
+
+  animation: swipe 1.4s infinite;
+  transition: 600ms opacity;
+
+
+}
+
+
+
