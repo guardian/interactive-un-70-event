@@ -11,6 +11,7 @@
   "dependencies": {
     "autoprefixer-core": "^5.2.1",
     "backbone": "^1.2.1",
+    "backbone.nativeajax": "^0.4.1",
     "backbone.nativeview": "^0.3.3",
     "chroma-js": "^1.1.1",
     "csswring": "^3.0.5",
@@ -26,6 +27,7 @@
     "grunt-sass": "^1.0.0",
     "grunt-text-replace": "^0.4.0",
     "grunt-webpack": "^1.0.10",
+    "hammerjs": "^2.0.4",
     "hogan.js": "^3.0.2",
     "imports-loader": "^0.6.4",
     "jbone": "^1.1.0",
@@ -33,6 +35,7 @@
     "jquery": "^2.1.4",
     "json-loader": "^0.5.2",
     "mustache": "^2.1.3",
+    "ractive": "^0.7.3",
     "raw-loader": "^0.5.1",
     "underscore": "^1.8.3"
   }
