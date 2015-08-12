@@ -1,2 +1,47 @@
-<h1>What's the UN done for me</h1>
-{{ message }}
+<div id="interactive-wrapper">
+	<h1>What's the UN done for you?</h1>
+	<div id="profile-selector">
+		<h2>Select a persona</h2>
+		<ul id="personas">
+			{{#each profiles}}
+				<li class="persona {{#if JSON.stringify(filter) === JSON.stringify(activeFilter)}}active{{/if}}" on-click="updateProfile"></li>
+			{{/each}}
+		</ul>
+		<div id="profile-filter">
+			<p>
+				<select value='{{activeFilter.gender}}'>
+					{{#each filters.TYPES}}
+						<option value="{{.}}">{{{.}}}</option>
+					{{/each}}
+				</select>
+				older than
+				<select value='{{activeFilter.age}}'>
+					{{#each filters.AGES}}
+						<option value="{{.}}">{{{.}}}</option>
+					{{/each}}
+				</select>
+				living in
+				<select value='{{activeFilter.country}}'>
+					{{#each filters.COUNTRIES}}
+						<option value="{{.}}">{{{.}}}</option>
+					{{/each}}
+				</select>
+			</p>
+		</div>
+	</div>
+	<div id="resolution-list">
+	{{#each resolutions:i}}
+		<div class="resolution resolution-{{i}} {{#if i===activeResolution}}active{{/if}}" on-click="expandResolution">
+			<div class="title-container">
+				<h4>{{HEADLINE}}</h4>
+				{{#if DATE}}<h5>in {{DATE}}</h5>{{/if}}
+			</div>
+			<div class="content-container">
+				<div class="pusher" style="float: right; width: 0px; height: 49px"></div>
+				<div class="illustration-container" style="float: right; clear: right"><img src="/imgs/illustrations/zeppelin.svg" /></div>
+				<p>{{ACHIEVEMENT}}</p>
+			</div>
+		</div>
+	{{/each}}
+	</div>
+</div>
