@@ -121,7 +121,7 @@ module.exports = function (grunt) {
         options: { livereload: true }
       },
       js: {
-        files: ['src/main.js', 'src/js/**/*.js','src/views/*.js', 'src/html/**/*.html'],
+        files: ['src/main.js', 'src/js/**/*.js', 'src/views/**/*.js', 'src/html/**/*.html'],
         tasks: ['webpack:dev', 'cachebust'],
         options: { livereload: true }
       },

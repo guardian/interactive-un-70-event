@@ -10,6 +10,7 @@ Mustache.parse(eventHTML);
 Mustache.parse(modalHTML);
 
 
+
 var EventCollection = Backbone.Collection.extend({
 
 	url: 'http://interactive.guim.co.uk/docsdata-test/' +
@@ -92,15 +93,27 @@ var BaseView = Backbone.NativeView.extend({
 		this.el.classList.add('gv-70');
 	},
 
+	stopAnimation: function() {
+		if ( this.animInterval ) {
+			clearInterval( this.animInterval );
+			this.animInterval = null;
+			this.el.classList.remove('animating');
+		}
+	},
+
 	pan: function(ev) {
 		ev.preventDefault();
+		this.stopAnimation();
+
 		var index = Math.round( ev.deltaX / this.stepWidth );
 		if ( isNaN( index ) ) { return; }
+		index *= -1;
 
 		var newIndex = this.currentIndex  + index;
 		newIndex = (newIndex > 70 ) ? 70 : newIndex;
 		newIndex = (newIndex < 0 ) ? 0 : newIndex;
 		this.showCard( newIndex, ev.type === 'panend');
+
 	},
 
 	showCard: function(index, save) {
@@ -112,11 +125,43 @@ var BaseView = Backbone.NativeView.extend({
 		}
 	},
 
+	navNext: function() {
+		this.stopAnimation();
+		if (this.currentIndex + 1 >= this.collection.length) {
+			return;
+		}
+		this.currentIndex += 1;
+		this.showCard(this.currentIndex , true );
+	},
+
+	navPrevious: function() {
+		this.stopAnimation();
+		if (this.currentIndex - 1 < 0) {
+			return;
+		}
+		this.currentIndex -= 1;
+		this.showCard(this.currentIndex , true );
+	},
+
+
+	animate: function() {
+		if (this.currentIndex + 1 >= this.collection.length) {
+			return this.showCard(0 , true );
+		}
+		this.currentIndex += 1;
+		this.showCard(this.currentIndex , true );
+	},
+
+	hideIntro: function() {
+		this.introEl.classList.add('hide');
+	},
 
 	render: function() {
 		this.el.innerHTML = this.html;
-		this.overlayEl = this.el.querySelector( '.gv-wrapper-overlay' );
+		// this.overlayEl = this.el.querySelector( '.gv-wrapper-overlay' );
 		this.markerEl = this.el.querySelector( '.gv-timeline-marker' );
+
+
 
 		var scale = chroma.scale(['#EEE', '#B6E0FF']);
         this.eventViews = this.collection.map(function(eventModel, i, arr) {
@@ -124,10 +169,11 @@ var BaseView = Backbone.NativeView.extend({
 			eventView.parent = this;
             this.el.appendChild( eventView.render().el );
 
+			// eventView.innerEl.setAttribute('style', '-webkit-filter: grayscale(' + (1 - i / (arr.length -1 ) ) * 100 + '%)' );
 			eventView.innerEl.style.backgroundColor = scale( i / (arr.length -1 ) ).hex();
 
-			eventView.overlayEl.style.opacity =  1 - i / (arr.length -1 );
-			eventView.overlayShinyEl.style.opacity =  i / (arr.length -1 );
+			// eventView.overlayEl.style.opacity =  1 - i / (arr.length -1 );
+			// eventView.overlayShinyEl.style.opacity =  i / (arr.length -1 );
 
             return eventView;
 		}, this);
@@ -140,7 +186,28 @@ var BaseView = Backbone.NativeView.extend({
 		this.hammer.get('pan').set({ direction: Hammer.DIRECTION_HORIZONTAL });
 		this.hammer.on('panleft panright panend', this.pan.bind(this) );
 
-		this.showCard(this.collection.length - 1, true);
+
+		//this.currentIndex = this.collection.length - 1;
+		this.currentIndex = 0;
+		this.showCard(this.currentIndex, true);
+
+
+
+		// this.el.classList.add('animating');
+		// this.animInterval = setInterval(this.animate.bind(this), 3000);
+
+
+		this.nextBtn = this.el.querySelector('.gv-nav-next');
+		this.nextBtn.addEventListener('click', this.navNext.bind(this), false);
+
+		this.previousBtn = this.el.querySelector('.gv-nav-previous');
+		this.previousBtn.addEventListener('click', this.navPrevious.bind(this), false);
+
+		this.introEl = this.el.querySelector('.gv-intro');
+		this.introEl.addEventListener('click', this.hideIntro.bind(this), false);
+		this.introEl.addEventListener('touchstart', this.hideIntro.bind(this), false);
+
+
 	}
 
 });

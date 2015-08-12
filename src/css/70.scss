@@ -1,4 +1,12 @@
 
+& {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+
 .gv-event-year {
     font-weight: 700;
     float: left;
@@ -44,7 +52,10 @@
 
 }
 
-//     transition: left 250ms cubic-bezier(0.22, 0.61, 0.36, 1)
+
+&.animating .gv-event {
+  transition: left 250ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
 
 .gv-event {
    border: 1px;
@@ -66,7 +77,7 @@
   perspective: 430px;
   perspective-origin: 50% 0;
   background: none!important;
-  width: 0;
+  width: 100%;
   position: relative;
   overflow: visible;
   margin-top: 0;
@@ -82,7 +93,6 @@
   transform: scale(0.96) translateY(0px);
 
   &.active {
-    box-shadow: -6px 0 8px rgba(0,0,0,0.1);
     transform: scale(1) translateY(0px);
     left: 35px;
     z-index: 100 !important;
@@ -144,21 +154,17 @@
 
 
   .gv-event-inner-wrap {
+    pointer-events: none;
     // background: #ffedd2 !important;
     border: 1px solid rgba(0,0,0,.2);
     border-radius: 2px;
     padding: 20px;
     height: calc(100% - 20px);
-    width: 250px;
+    width: calc(100% - 70px);
     overflow: hidden;
     position: relative;
     box-sizing: border-box;
-
-
-
     background-size: cover;
-    border-radius: 10px;
-
   }
 
   .gv-event-year {
@@ -193,6 +199,7 @@
     bottom: 10px;
     position: absolute;
     left: 10px;
+    pointer-events: none;
 }
 
 .gv-timeline-marker {
@@ -232,6 +239,10 @@
     top: -10px;
     position: absolute;
     line-height: 0;
+
+
+    &::-moz-selection { background: transparent; }
+    &::selection { background: transparent; }
 }
 
 .gv-timeline-end {
@@ -240,38 +251,24 @@
 
 
 .gv-nav {
+    display: block;
     position: absolute;
-    width: 30px;
-    height: 80px;
-    bottom: 40%;
-    z-index: 9999;
-    border-radius: 3px;
-    font-weight: 700;
-    font-size: 39px;
-    font-family: serif;
-    text-align: center;
-    line-height: 1.4em;
-    color: rgba(0,0,0,.12);
-    vertical-align: middle;
-    line-height: 200%;
-    /* text-shadow: 0 0 2px rgba(0, 255, 172, 0.6); */
-    padding: 24px 0px 24px 12px;
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
+    width: 37%;
+    height: 100%;
+    bottom: 0;
+    z-index: 105;
     cursor: pointer;
-
-  &:hover {
-    background-color: rgba(255, 210, 4, 0.79);
-    color: #fff;
-  }
+    text-indent: -9000px;
+    overflow: hidden;
+    z-index: 105;
 }
+
 .gv-nav-next {
   right: 0px;
 }
 
 .gv-nav-previous {
   left: 0px;
-  padding: 24px 12px 24px 0;
 }
 
 
@@ -283,9 +280,78 @@
   right: 0;
   background-size: cover;
   background-image: url('/imgs/card.png');
-  z-index: -1;
+  z-index: 1;
 }
 
 .gv-event-overlay-shiny {
   background-image: url('/imgs/gloss-card.png');
 }
+
+
+.gv-event-tv {
+  position: relative;
+  padding: 2vw;
+}
+
+.gv-event-tv-screen {
+    background-image: url(/imgs/tv.svg);
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    left: 0;
+}
+
+.grayscale {
+    filter: url("data:image/svg+xml;utf8,&lt;svg xmlns=\'http://www.w3.org/2000/svg\'&gt;&lt;filter id=\'grayscale\'&gt;&lt;feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/&gt;&lt;/filter&gt;&lt;/svg&gt;#grayscale"); /* Firefox 10+, Firefox on Android */
+    filter: gray; /* IE6-9 */
+    -webkit-filter: grayscale(100%); /* Chrome 19+, Safari 6+, Safari 6+ iOS */
+}
+
+
+.gv-intro {
+    background-color: rgba(255, 255, 255, 0.94);
+    z-index: 110;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    font-size: 26px;
+    box-sizing: border-box;
+    padding: 20px;
+    opacity: 1;
+    transition: 100ms opacity;
+
+    &.hide {
+      opacity: 0;
+    }
+}
+
+
+@keyframes swipe {
+  0%   { transform: translate(-50%, -50%); }
+  70%   { transform: translate(-70%, -50%); }
+  100% { transform: translate(-50%, -50%); }
+}
+
+.gv-swipe-hint {
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  height: 140px;
+  width: 140px;
+  background-image: url(/imgs/swipe.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  transform: translate(-50%, -50%);
+  transform-origin: 50% 100%;
+
+  animation: swipe 1.4s infinite;
+  transition: 600ms opacity;
+
+
+}
+
+
+
