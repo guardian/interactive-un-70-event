@@ -154,13 +154,15 @@ var BaseView = Backbone.NativeView.extend({
 
 	hideIntro: function() {
 		this.introEl.classList.add('hide');
+		setTimeout(function() {
+			this.introEl.parentNode.removeChild(this.introEl);
+		}.bind(this), 300)
 	},
 
 	render: function() {
 		this.el.innerHTML = this.html;
 		// this.overlayEl = this.el.querySelector( '.gv-wrapper-overlay' );
 		this.markerEl = this.el.querySelector( '.gv-timeline-marker' );
-
 
 
 		var scale = chroma.scale(['#EEE', '#B6E0FF']);
