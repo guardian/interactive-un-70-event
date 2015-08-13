@@ -50,7 +50,7 @@ module.exports = function (grunt) {
         },
         module: {
           loaders: [
-            { test: /\.(html|txt|css)$/, loader: 'raw-loader' },
+            { test: /\.(html|txt|css|svg)$/, loader: 'raw-loader' },
             { test: /\.json$/, loader: "json-loader" },
             {
                 test: require.resolve("exoskeleton"),

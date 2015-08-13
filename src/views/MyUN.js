@@ -1,6 +1,19 @@
 var getJSON = require('../js/utils/getjson');
 var Ractive = require('ractive');
 var html = require('../html/myUN.html');
+var svgs = {
+	weapons: require('../imgs/illustrations/aid.svg'),
+	democracy: require('../imgs/illustrations/democracy.svg'),
+	energy: require('../imgs/illustrations/energy.svg'),
+	food: require('../imgs/illustrations/food.svg'),
+	aid: require('../imgs/illustrations/aid.svg'),
+	health: require('../imgs/illustrations/health.svg'),
+	money: require('../imgs/illustrations/money.svg'),
+	refugees: require('../imgs/illustrations/refugees.svg'),
+	rights: require('../imgs/illustrations/rights.svg'),
+	terrorism: require('../imgs/illustrations/terrorism.svg'),
+	un: require('../imgs/illustrations/un.svg'),
+}
 var container;
 var data;
 var app;
@@ -25,7 +38,7 @@ var profiles = [{
 		id: "anotherperson",
 		filter: {
 			gender: "Male",
-			country: "France",
+			country: "Palestine",
 			age: 18
 		},
 		active: false
@@ -37,7 +50,8 @@ var profiles = [{
 			age: 23
 		},
 		active: false
-	}]
+	}
+]
 
 function init(el){
 	container = el;
@@ -67,39 +81,6 @@ function init(el){
 	});
 }
 
-function createFilters(){
-	var categories = ["COUNTRIES","AGES","TYPES"];
-	var filterValues = {
-		COUNTRIES: [],
-		AGES: [],
-		TYPES: []
-	};
-	categories.forEach(function(category){
-		data.forEach(function(i){
-			if(i[category] !== "all"){
-				if(category === "COUNTRIES"){
-					i[category].forEach(function(j){
-						if(filterValues[category].indexOf(j) === -1){
-							filterValues[category].push(j);
-						}
-					})
-				}
-				else{
-					if(filterValues[category].indexOf(i[category]) === -1){
-						console.log(i[category])
-						if(i[category] !== "Koreas: All Others: 60 and above"){
-							filterValues[category].push(i[category]);
-						}
-						
-					}	
-				}
-			}
-		})
-	});
-
-	// app.set('filters',filterValues)
-}
-
 function loadPage(){
 	app = new Ractive({
 		template: html,
@@ -116,7 +97,8 @@ function loadPage(){
 				AGES: [12,17,18,23,24,25,26,55,60],
 				TYPES: ["Male","Female"]
 			},
-			activeResolution: 0
+			activeResolution: 0,
+			illustrations: svgs
 		},
 		el: el
 	})
@@ -133,7 +115,55 @@ function loadPage(){
 	app.observe('activeFilter',updateResults);
 
 	app.on('expandResolution',function(e){
-		app.set('activeResolution',e.index.i)
+		if(e.index.i !== app.get('activeResolution')){
+			app.set('activeResolution',e.index.i);
+			var resolutionHeight = document.querySelector('.resolution.active .content-container').clientHeight;
+			var illustrationHeight = document.querySelector('.resolution.active .illustration-container').clientHeight + 10;
+			var margin = (resolutionHeight - illustrationHeight)/2;
+			if(margin > 20){
+				if(e.context.CATEGORY === "terrorism"){
+					document.querySelector('.resolution.active .pusher').style.height = (resolutionHeight - illustrationHeight) + 'px';
+				}else if(e.context.CATEGORY === "refugees"){
+					document.querySelector('.resolution.active .pusher').style.height = (resolutionHeight - illustrationHeight) + 'px';
+				}else{
+					document.querySelector('.resolution.active .pusher').style.height = margin + 'px';
+				}
+			}
+
+			var paths = document.querySelectorAll('.resolution.active svg path');
+			var max = paths.length;
+			var fadeIn = false;
+			var speed = 300/max;
+
+			function fadeOutSvg(num){
+				setTimeout(function(){
+					paths[num].setAttribute('data-old', paths[num].style.fill);
+					paths[num].style.fill = "#eee";
+					if(num > max-(max/3) && !fadeIn){
+						fadeIn = true;
+						// fadeInSvg(0);
+					}
+					if(paths[num + 1]){
+						num++;
+						fadeOutSvg(num);
+					}else{
+						fadeInSvg(0);
+					}
+				},speed)
+			}
+			function fadeInSvg(num){
+				setTimeout(function(){
+					 paths[num].style.fill = paths[num].getAttribute('data-old');
+
+					if(paths[num + 1]){
+						num++;
+						fadeInSvg(num);
+					}
+				},speed)
+			}
+
+			fadeOutSvg(0);
+		}
 	})
 }
 
@@ -168,6 +198,39 @@ function updateResults(){
 	console.log(results);
 	app.set('activeResolution',0)
 	app.set('resolutions', results);
+}
+
+function createFilters(){
+	var categories = ["COUNTRIES","AGES","TYPES"];
+	var filterValues = {
+		COUNTRIES: [],
+		AGES: [],
+		TYPES: []
+	};
+	categories.forEach(function(category){
+		data.forEach(function(i){
+			if(i[category] !== "all"){
+				if(category === "COUNTRIES"){
+					i[category].forEach(function(j){
+						if(filterValues[category].indexOf(j) === -1){
+							filterValues[category].push(j);
+						}
+					})
+				}
+				else{
+					if(filterValues[category].indexOf(i[category]) === -1){
+						console.log(i[category])
+						if(i[category] !== "Koreas: All Others: 60 and above"){
+							filterValues[category].push(i[category]);
+						}
+						
+					}	
+				}
+			}
+		})
+	});
+
+	app.set('filters',filterValues)
 }
 
 module.exports = function(el) {

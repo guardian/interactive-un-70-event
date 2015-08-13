@@ -70,7 +70,7 @@ h1 {
 .resolution{
 	padding:4px 10px;
 	margin-bottom:1px;
-	background:#eee;
+	background:#EFF4F8;
 	overflow:hidden;
 	position: relative;
 	cursor:pointer;
@@ -78,7 +78,6 @@ h1 {
 	&:hover{
 		opacity:0.8;
 		.illustration-container{
-			transform: translateX(-10px);
 		}
 	}
 	h4{
@@ -98,9 +97,9 @@ h1 {
 	}
 	&.resolution-0,&.resolution-1,&.resolution-2{
 		background:#FFECD0;
-		padding:11px 10px;
+		padding:24px 10px;
 		h4{
-			@include fs-headline(3);
+			@include fs-headline(4);
 			font-weight:100;
 			display:block;
 		}
@@ -110,10 +109,14 @@ h1 {
 		}
 		&.active{
 			padding:14px 10px;
-			h4{
-				@include fs-headline(4);
-				font-weight:100;
-			}
+			// h4{
+			// 	@include fs-headline(4);
+			// 	font-weight:100;
+			// }
+		}
+		.illustration-container{
+			display:block;
+			opacity:0.2;
 		}
 		
 	}
@@ -122,12 +125,22 @@ h1 {
 	}
 	.illustration-container{
 		position: absolute;
-		bottom:-10px;
+		bottom:0;
 		right:0;
 		transition:transform 0.4s;
+		display:none;
+		font-size:0;
+		svg{
+			width:100%;
+			height:auto;
+			path{
+				transition: fill 0.5s;
+			}
+		}
 	}
 	&.active{
 		cursor:default;
+		padding:14px 10px;
 		&:hover{
 			opacity:1;
 			.illustration-container{
@@ -142,10 +155,12 @@ h1 {
 		}
 		.content-container{
 			.illustration-container{
-				margin-right:-10px;
+				margin:5px 0 5px 20px;
 				position: relative;
 				font-size:1em;
-				bottom:-14px;
+				bottom:auto;
+				display:block;
+				opacity:1;
 			}	
 		}
 	}
@@ -178,5 +193,40 @@ h1 {
 	}
 	#profile-selector ul,#profile-filter{
 		margin-left:140px;
+	}
+}
+
+
+// Categories
+.resolution{
+	.illustration{
+		width:160px;
+	}
+	&.category-weapons, &.category-un{
+		background:#B9DBEA;
+		.illustration{
+			width:120px;
+		}
+	}
+	&.category-terrorism{
+		.illustration{
+			width:160px;
+		}
+	}
+	&.category-refugees,&.category-rights{
+		.illustration{
+			width:200px;
+		}
+	}
+	&.category-health, &.category-aid{
+		.illustration{
+			width:125px;
+		}
+	}
+	&.category-energy,&.category-food{
+		.illustration{
+			width:100px;
+			margin-right:20px;
+		}
 	}
 }
