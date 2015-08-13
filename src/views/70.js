@@ -9,7 +9,10 @@ var Mustache = require('mustache');
 Mustache.parse(eventHTML);
 Mustache.parse(modalHTML);
 
-
+// Analytics
+var analytics = require('../js/utils/analytics.js');
+analytics('create', 'UA-25353554-28', 'auto');
+analytics('send', 'pageview', { 'title': 'UN in 70 years' });
 
 var EventCollection = Backbone.Collection.extend({
 
@@ -132,6 +135,7 @@ var BaseView = Backbone.NativeView.extend({
 		}
 		this.currentIndex += 1;
 		this.showCard(this.currentIndex , true );
+		analytics('send', 'event', 'UI', 'click-tap', 'next-item');
 	},
 
 	navPrevious: function() {
@@ -141,6 +145,7 @@ var BaseView = Backbone.NativeView.extend({
 		}
 		this.currentIndex -= 1;
 		this.showCard(this.currentIndex , true );
+		analytics('send', 'event', 'UI', 'click-tap', 'previous-item');
 	},
 
 
@@ -154,13 +159,17 @@ var BaseView = Backbone.NativeView.extend({
 
 	hideIntro: function() {
 		this.introEl.classList.add('hide');
+		setTimeout(function() {
+			this.introEl.parentNode.removeChild(this.introEl);
+		}.bind(this), 300)
+
+		analytics('send', 'event', 'UI', 'click-tap', 'skip-intro');
 	},
 
 	render: function() {
 		this.el.innerHTML = this.html;
 		// this.overlayEl = this.el.querySelector( '.gv-wrapper-overlay' );
 		this.markerEl = this.el.querySelector( '.gv-timeline-marker' );
-
 
 
 		var scale = chroma.scale(['#EEE', '#B6E0FF']);
@@ -185,6 +194,9 @@ var BaseView = Backbone.NativeView.extend({
 		this.hammer = new Hammer(this.el, { drag_lock_to_axis: true });
 		this.hammer.get('pan').set({ direction: Hammer.DIRECTION_HORIZONTAL });
 		this.hammer.on('panleft panright panend', this.pan.bind(this) );
+		this.hammer.on('panstart', function() {
+			analytics('send', 'event', 'UI', 'pan', 'panned-list');
+		})
 
 
 		//this.currentIndex = this.collection.length - 1;
