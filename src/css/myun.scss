@@ -70,7 +70,8 @@ h1 {
 .resolution{
 	padding:4px 10px;
 	margin-bottom:1px;
-	background:#EFF4F8;
+	// background:#EFF4F8;
+	background:#FFECD0;
 	overflow:hidden;
 	position: relative;
 	cursor:pointer;
@@ -96,7 +97,7 @@ h1 {
 		display:none;
 	}
 	&.resolution-0,&.resolution-1,&.resolution-2{
-		background:#FFECD0;
+		// background:#FFECD0;
 		padding:24px 10px;
 		h4{
 			@include fs-headline(4);
@@ -175,21 +176,31 @@ h1 {
 			display:block;
 		}
 		.content-container{
-			margin:0;
-			width:65%;
-			float:right;
+			padding-top:12px;
+			.illustration-container{
+				margin:0;
+				width:35%;
+				.illustration{
+					width:100%;
+				}
+			}
 		}
-		.title-container{
-			float:left;
-			width:35%;
-			padding-right:10px;
-			box-sizing:border-box;
+
+		.pusher{
+			height:0 !important;
+		}
+		p{
+			display:inline-block;
+			width:60%;
+			margin:0;
 		}
 		
 	}
 	#profile-selector h2{
 		position: absolute;
 		margin-top:12px;
+		width:220px;
+		display:inline-block;
 	}
 	#profile-selector ul,#profile-filter{
 		margin-left:140px;
@@ -203,7 +214,7 @@ h1 {
 		width:160px;
 	}
 	&.category-weapons, &.category-un{
-		background:#B9DBEA;
+		// background:#B9DBEA;
 		.illustration{
 			width:120px;
 		}
@@ -215,7 +226,8 @@ h1 {
 	}
 	&.category-refugees,&.category-rights{
 		.illustration{
-			width:200px;
+			width:280px;
+			margin-bottom:-26px;
 		}
 	}
 	&.category-health, &.category-aid{
@@ -224,6 +236,7 @@ h1 {
 		}
 	}
 	&.category-energy,&.category-food{
+		// background:#44AF6A;
 		.illustration{
 			width:100px;
 			margin-right:20px;

@@ -14,9 +14,17 @@ var svgs = {
 	terrorism: require('../imgs/illustrations/terrorism.svg'),
 	un: require('../imgs/illustrations/un.svg'),
 }
+
+// Analytics
+var analytics = require('../js/utils/analytics.js');
+analytics('create', 'UA-25353554-28', 'auto');
+analytics('send', 'pageview', { 'title': 'My UN' });
+
+// Variables
 var container;
 var data;
 var app;
+var clickedPersona;
 
 var profiles = [{
 		id: "nigerianwoman",
@@ -104,7 +112,7 @@ function loadPage(){
 	})
 
 	app.on('updateProfile',function(e){
-		console.log(e);
+		clickedPersona = true;
 		app.set('activeFilter', {
 			gender: e.context.filter.gender,
 			country: e.context.filter.country,
@@ -117,13 +125,14 @@ function loadPage(){
 	app.on('expandResolution',function(e){
 		if(e.index.i !== app.get('activeResolution')){
 			app.set('activeResolution',e.index.i);
+			analytics('send', 'event', 'UI', 'click-tap', 'ExpandMission');
 			var resolutionHeight = document.querySelector('.resolution.active .content-container').clientHeight;
 			var illustrationHeight = document.querySelector('.resolution.active .illustration-container').clientHeight + 10;
 			var margin = (resolutionHeight - illustrationHeight)/2;
 			if(margin > 20){
 				if(e.context.CATEGORY === "terrorism"){
 					document.querySelector('.resolution.active .pusher').style.height = (resolutionHeight - illustrationHeight) + 'px';
-				}else if(e.context.CATEGORY === "refugees"){
+				}else if(e.context.CATEGORY === "rights"){
 					document.querySelector('.resolution.active .pusher').style.height = (resolutionHeight - illustrationHeight) + 'px';
 				}else{
 					document.querySelector('.resolution.active .pusher').style.height = margin + 'px';
@@ -195,7 +204,12 @@ function updateResults(){
 		    return -1;
 		  return 0;
 	})
-	console.log(results);
+	if(clickedPersona){
+		analytics('send', 'event', 'UI', 'click-tap', 'Persona: ' + filter.country + " - " + filter.age + " - " + filter.gender);
+	}else{
+		analytics('send', 'event', 'UI', 'click-tap', 'Dropdown: ' + filter.country + " - " + filter.age + " - " + filter.gender);
+	}
+	clickedPersona = false;
 	app.set('activeResolution',0)
 	app.set('resolutions', results);
 }
