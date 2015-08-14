@@ -38,6 +38,25 @@ var EventCollection = Backbone.Collection.extend({
 
 
 
+var svgs = {
+	aid: '/imgs/illustrations/aid.svg',
+	city: '/imgs/illustrations/city.svg',
+	democracy: '/imgs/illustrations/democracy.svg',
+	energy: '/imgs/illustrations/energy.svg',
+	food: '/imgs/illustrations/food.svg',
+	health: '/imgs/illustrations/health.svg',
+	money: '/imgs/illustrations/money.svg',
+	refugees: '/imgs/illustrations/refugees.svg',
+	rights: '/imgs/illustrations/rights.svg',
+	terrorism: '/imgs/illustrations/terrorism.svg',
+	un: '/imgs/illustrations/un.svg',
+	weapons: '/imgs/illustrations/weapons.svg',
+	war: '/imgs/illustrations/war.svg',
+	peace: '/imgs/illustrations/peace.svg'
+};
+
+
+
 var EventView = Backbone.NativeView.extend({
 
 	className: 'gv-event',
@@ -70,6 +89,8 @@ var EventView = Backbone.NativeView.extend({
 	},
 
 	render: function() {
+
+		this.model.set('svg', svgs[ this.model.get('CATEGORY') ]);
 
 		this.el.innerHTML = Mustache.render(eventHTML, this.model.attributes);
 

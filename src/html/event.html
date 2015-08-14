@@ -2,7 +2,6 @@
     <p class="gv-event-year"> {{ YEAR }} </p>
 	<p class="gv-event-text"> {{ HEADLINE }} </p>
     <div class="gv-event-content">
-        <p class="gv-event-copy"> {{ EVENT }} </p>
 
         {{#VIDEO}}
         <div class="gv-event-tv">
@@ -18,8 +17,10 @@
             <img src="{{ . }}" width="640" alt="" class="gv-event-images" />
         {{/IMAGES}}
 
-        <img src="/imgs/placeholder.svg" alt="" class="gv-event-symbol" />
-        
+        <p class="gv-event-copy"> {{ EVENT }} </p>
+
+        <img src="{{ svg }}" alt="" class="gv-event-symbol" />
+
     </div>
 
 </div>
