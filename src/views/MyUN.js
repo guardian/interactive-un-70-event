@@ -171,7 +171,7 @@ function loadPage(){
 				},speed)
 			}
 
-			fadeOutSvg(0);
+			// fadeOutSvg(0);
 		}
 	})
 }

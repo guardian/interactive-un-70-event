@@ -7,15 +7,16 @@
   max-width: 350px;
   margin: auto;
   max-height: 460px;
+  -webkit-font-smoothing: antialiased;
 }
 
 
 .gv-event-year {
     font-weight: 700;
-    float: left;
     line-height: 1em;
     font-size: 24px;
     position: relative;
+    color:#1E3D57;
 
  &::before {
     // content: " ";
@@ -31,15 +32,13 @@
 }
 
 .gv-event-text {
-    font-size: 22px;
+    font-size: 42px;
     font-family: Guardian Egyptian Web,Guardian Text Egyptian Web,Georgia,serif;
-    width: 150px;
-    padding-bottom: 10px;
+    padding-bottom: 0;
     line-height: 1em;
     word-break: normal;
-    font-weight: 800;
-    font-size: 24px;
-    color: #FFF;
+    font-weight: 100;
+    color: #1E3D57;
 }
 
 
@@ -102,12 +101,12 @@
 
   &.active {
     transform: scale(1) translateY(0px);
-    left: 35px;
+    left: 20px;
     z-index: 100 !important;
 
      .gv-event-inner-wrap {
         // box-shadow: -1px 2px 8px rgba(0,0,0,0.2);
-        border-color: rgba(0,0,0,0.2);
+        border-color: rgba(200,200,200,0.5);
         // background-color: #FFECD0 !important;
         transform: rotateX(0);
      }
@@ -128,18 +127,18 @@
     left: calc(100% - 28px);
 
     .gv-event-inner-wrap {
-        border-color: rgba(0,0,0,0.3);
+        border-color: rgba(200,200,200,0.5);
         color: rgba(0,0,0,0.5);
      }
   }
 
   &.next {
-    left: 13px;
+    left: 12px;
     transform: scale(0.98) translateY(0px);
     z-index: 99 !important;
 
      .gv-event-inner-wrap {
-        border-color: rgba(0,0,0,0.3);
+        border-color: rgba(200,200,200,0.5);
         color: rgba(0,0,0,0.5);
      }
   }
@@ -150,7 +149,7 @@
     z-index: 98 !important;
 
      .gv-event-inner-wrap {
-        border-color: rgba(0,0,0,0.3);
+        border-color: rgba(200,200,200,0.5);
         color: rgba(0,0,0,0.5);
      }
   }
@@ -166,20 +165,29 @@
     // background: #ffedd2 !important;
     border: 1px solid rgba(0,0,0,.2);
     border-radius: 2px;
-    padding: 12px;
+    padding: 20px 10px 10px;
     height: calc(100% - 20px);
-    width: calc(100% - 70px);
+    width: calc(100% - 40px);
     overflow: hidden;
     position: relative;
     box-sizing: border-box;
     background-size: cover;
   }
 
-  .gv-event-year {
-    position: absolute;
-    right: 12px;
-    top: 10px;
-    color: rgba(76, 109, 133, 0.45);
+  .gv-event .gv-event-year {
+    font-size:28px;
+    font-weight:bold;
+    font-family: Guardian Egyptian Web,Guardian Text Egyptian Web,Georgia,serif;
+    display:block;
+    margin-top:5px;
+  }
+  .gv-event .gv-event-content{
+    margin-top:28px;
+    p{
+      font-family: Guardian Egyptian Web,Guardian Text Egyptian Web,Georgia,serif;
+      font-size:16px;
+    }
+    
   }
 
 
@@ -362,10 +370,10 @@
 
 .gv-event-symbol {
     position: absolute;
-    bottom: 10px;
+    bottom: -1px;
     opacity: .8;
-    right: 10px;
-    width: 50%;
+    right: -1px;
+    height:100px;
     z-index: -1;
 
     &.gv-event-symbol-fade {
