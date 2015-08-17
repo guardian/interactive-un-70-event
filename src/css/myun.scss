@@ -155,6 +155,7 @@ h1 {
 			display:block;
 		}
 		.content-container{
+			padding-top:12px;
 			.illustration-container{
 				margin:5px 0 5px 20px;
 				position: relative;
@@ -175,8 +176,7 @@ h1 {
 			content:'';
 			display:block;
 		}
-		.content-container{
-			padding-top:12px;
+		.content-container{			
 			.illustration-container{
 				margin:0;
 				width:35%;
@@ -199,7 +199,7 @@ h1 {
 	#profile-selector h2{
 		position: absolute;
 		margin-top:12px;
-		width:220px;
+		// width:220px;
 		display:inline-block;
 	}
 	#profile-selector ul,#profile-filter{
