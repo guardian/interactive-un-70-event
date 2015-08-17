@@ -367,6 +367,10 @@
     right: 10px;
     width: 50%;
     z-index: -1;
+
+    &.gv-event-symbol-fade {
+      opacity: 0.1;
+    }
 }
 
 
