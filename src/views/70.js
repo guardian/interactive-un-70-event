@@ -179,15 +179,18 @@ var BaseView = Backbone.NativeView.extend({
 	},
 
 	hideIntro: function() {
+		if (this.started) { return; }
 		this.introEl.classList.add('hide');
 		setTimeout(function() {
 			this.introEl.parentNode.removeChild(this.introEl);
 		}.bind(this), 300)
 
+		this.started = true;
 		analytics('send', 'event', 'UI', 'click-tap', 'skip-intro');
 	},
 
 	render: function() {
+		this.started = false;
 		this.el.innerHTML = this.html;
 		// this.overlayEl = this.el.querySelector( '.gv-wrapper-overlay' );
 		this.markerEl = this.el.querySelector( '.gv-timeline-marker' );
@@ -216,8 +219,10 @@ var BaseView = Backbone.NativeView.extend({
 		this.hammer.get('pan').set({ direction: Hammer.DIRECTION_HORIZONTAL });
 		this.hammer.on('panleft panright panend', this.pan.bind(this) );
 		this.hammer.on('panstart', function() {
+			this.hideIntro();
 			analytics('send', 'event', 'UI', 'pan', 'panned-list');
-		})
+		}.bind(this));
+
 
 
 		//this.currentIndex = this.collection.length - 1;
@@ -238,8 +243,6 @@ var BaseView = Backbone.NativeView.extend({
 
 		this.introEl = this.el.querySelector('.gv-intro');
 		this.introEl.addEventListener('click', this.hideIntro.bind(this), false);
-		this.introEl.addEventListener('touchstart', this.hideIntro.bind(this), false);
-
 
 	}
 
