@@ -1,6 +1,6 @@
 var Backbone = require('exoskeleton');
 Backbone.NativeView = require('backbone.nativeview');
-Backbone.ajax = require('backbone.nativeajax');
+var getJSON = require('../js/utils/getjson.js');
 var Hammer = require('hammerjs');
 var eventHTML = require('../html/event.html');
 var modalHTML = require('../html/modal.html');
@@ -16,11 +16,7 @@ analytics('send', 'pageview', { 'title': 'UN in 70 years' });
 
 var EventCollection = Backbone.Collection.extend({
 
-	url: 'http://interactive.guim.co.uk/docsdata-test/' +
-		 '1YZKHghxCPhxbJH65K0GxzDb9-Id2t5O8hTxLw9jyN_w.json',
-
 	parse: function(json) {
-
 		if ( !json || !json.hasOwnProperty('sheets') || json.hasOwnProperty('data') ) {
 			return console.warn('Unexpected JSON data', json);
 		}
@@ -35,8 +31,6 @@ var EventCollection = Backbone.Collection.extend({
 
 	}
 });
-
-
 
 var svgs = {
 	aid: '/imgs/illustrations/aid.svg',
@@ -131,7 +125,11 @@ var BaseView = Backbone.NativeView.extend({
 
 		var index = Math.round( ev.deltaX / this.stepWidth );
 		if ( isNaN( index ) ) { return; }
-		index *= -1;
+
+		// Reverse direction on mobile
+		if (this.isMobile) {
+			index *= -1;
+		}
 
 		var newIndex = this.currentIndex  + index;
 		newIndex = (newIndex > 70 ) ? 70 : newIndex;
@@ -190,13 +188,17 @@ var BaseView = Backbone.NativeView.extend({
 	},
 
 	render: function() {
+		// Mobile regex from https://gist.github.com/dalethedeveloper/1503252
+		this.isMobile = !!navigator.userAgent.match(/Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile/gi);
+		console.log(this.isMobile);
+
 		this.started = false;
 		this.el.innerHTML = this.html;
-		// this.overlayEl = this.el.querySelector( '.gv-wrapper-overlay' );
 		this.markerEl = this.el.querySelector( '.gv-timeline-marker' );
 
-
+		// Colour scaling
 		var scale = chroma.scale(['#EEE', '#B6E0FF']);
+
         this.eventViews = this.collection.map(function(eventModel, i, arr) {
 			var eventView = new EventView({ model: eventModel });
 			eventView.parent = this;
@@ -205,8 +207,6 @@ var BaseView = Backbone.NativeView.extend({
 			// eventView.innerEl.setAttribute('style', '-webkit-filter: grayscale(' + (1 - i / (arr.length -1 ) ) * 100 + '%)' );
 			eventView.innerEl.style.backgroundColor = scale( i / (arr.length -1 ) ).hex();
 
-			// eventView.overlayEl.style.opacity =  1 - i / (arr.length -1 );
-			// eventView.overlayShinyEl.style.opacity =  i / (arr.length -1 );
 
             return eventView;
 		}, this);
@@ -228,13 +228,6 @@ var BaseView = Backbone.NativeView.extend({
 		//this.currentIndex = this.collection.length - 1;
 		this.currentIndex = 0;
 		this.showCard(this.currentIndex, true);
-
-
-
-		// this.el.classList.add('animating');
-		// this.animInterval = setInterval(this.animate.bind(this), 3000);
-
-
 		this.nextBtn = this.el.querySelector('.gv-nav-next');
 		this.nextBtn.addEventListener('click', this.navNext.bind(this), false);
 
@@ -243,13 +236,9 @@ var BaseView = Backbone.NativeView.extend({
 
 		this.introEl = this.el.querySelector('.gv-intro');
 		this.introEl.addEventListener('click', this.hideIntro.bind(this), false);
-
 	}
 
 });
-
-
-
 
 module.exports = function( el ) {
 	var baseView = new BaseView({
@@ -257,6 +246,15 @@ module.exports = function( el ) {
 		collection: new EventCollection()
 	});
 
-	baseView.collection.on('sync', baseView.render, baseView);
-	baseView.collection.fetch();
+	var url = 'http://interactive.guim.co.uk/docsdata-test/' +
+		 '1YZKHghxCPhxbJH65K0GxzDb9-Id2t5O8hTxLw9jyN_w.json';
+
+
+	getJSON(url, function(data) {
+
+		baseView.collection.add( baseView.collection.parse(data) );
+		 baseView.render();
+
+	}.bind(this));
+
 }
