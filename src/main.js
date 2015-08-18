@@ -1,3 +1,5 @@
+require('./js/utils/classList.js');
+
 function boot(el) {
 	var query = document.location.search;
 	if ( query.search('70') > 0 ) {

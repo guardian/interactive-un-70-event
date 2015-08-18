@@ -1,4 +1,3 @@
-require('../js/utils/classList.js');
 var Backbone = require('exoskeleton');
 Backbone.NativeView = require('backbone.nativeview');
 var getJSON = require('../js/utils/getjson.js');
@@ -126,7 +125,11 @@ var BaseView = Backbone.NativeView.extend({
 
 		var index = Math.round( ev.deltaX / this.stepWidth );
 		if ( isNaN( index ) ) { return; }
-		index *= -1;
+
+		// Reverse direction on mobile
+		if (this.isMobile) {
+			index *= -1;
+		}
 
 		var newIndex = this.currentIndex  + index;
 		newIndex = (newIndex > 70 ) ? 70 : newIndex;
@@ -185,6 +188,10 @@ var BaseView = Backbone.NativeView.extend({
 	},
 
 	render: function() {
+		// Mobile regex from https://gist.github.com/dalethedeveloper/1503252
+		this.isMobile = !!navigator.userAgent.match(/Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile/gi);
+		console.log(this.isMobile);
+
 		this.started = false;
 		this.el.innerHTML = this.html;
 		this.markerEl = this.el.querySelector( '.gv-timeline-marker' );
