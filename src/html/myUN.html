@@ -32,13 +32,17 @@
 	<div id="resolution-list">
 	{{#each resolutions:i}}
 		<div class="resolution resolution-{{i}} {{#if i===activeResolution}}active{{/if}} category-{{CATEGORY}}" on-click="expandResolution">
+			<div class="wrap"></div>
 			<div class="title-container">
 				<h4>{{HEADLINE}}</h4>
-				{{#if DATE}}<h5>in {{DATE}}</h5>{{/if}}
+				{{#if DATE}}<h5> {{DATE}}</h5>{{/if}}
 			</div>
 			<div class="content-container">
-				<div class="pusher" style="float: right; width: 0px;"></div>
-				<div class="illustration-container" style="float: right; clear: right"><div class="illustration">{{{illustrations[CATEGORY]}}}</div></div>
+				
+				<div class="illustration-container">
+
+					<div class="illustration">{{{illustrations[CATEGORY]}}}</div>
+				</div>
 
 				<p>{{ACHIEVEMENT}}</p>
 			</div>

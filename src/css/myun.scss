@@ -68,10 +68,9 @@ h1 {
 }
 
 .resolution{
-	padding:4px 10px;
+	padding:12px 10px 10px;
 	margin-bottom:1px;
-	// background:#EFF4F8;
-	background:#FFECD0;
+	background:#eaeaea;
 	overflow:hidden;
 	position: relative;
 	cursor:pointer;
@@ -84,53 +83,47 @@ h1 {
 	h4{
 		margin:0;
 		display:inline-block;
-		@include fs-header(1);
+		@include fs-header(2);
+		line-height: 1em;
 	}
 	h5{
 		@include fs-header(1);
 		margin:0;
 		display:inline-block;
 		font-weight:100;
+		line-height: 1em;
 	}
 	p{
-		@include fs-textSans(3);
+		@include fs-bodyCopy(1);
 		display:none;
 	}
-	&.resolution-0,&.resolution-1,&.resolution-2{
-		// background:#FFECD0;
-		padding:24px 10px;
-		h4{
-			@include fs-headline(4);
-			font-weight:100;
-			display:block;
-		}
-		h5{
-			font-weight:bold;
-			display:block;
-		}
-		&.active{
-			padding:14px 10px;
-			// h4{
-			// 	@include fs-headline(4);
-			// 	font-weight:100;
-			// }
-		}
-		.illustration-container{
-			display:block;
-			opacity:0.2;
-		}
-		
+	.content-container{
+		position: relative;
 	}
-	.pusher{
-		display:none;
-	}
-	.illustration-container{
+	.wrap{
 		position: absolute;
 		bottom:0;
 		right:0;
-		transition:transform 0.4s;
+		width: 0;
+		height: 0;
+		border-style: solid;
+		border-width: 0 0 46px 46px;
+		border-color: transparent transparent red transparent;
+	}
+	.illustration-container{
+		background: red;
+		margin: 8px -10px;
+		padding:20px 0 0;
+		position: relative;
 		display:none;
-		font-size:0;
+		min-height:100px;
+
+		.illustration{
+			max-width:240px;
+			width:auto;
+			margin:0 auto;
+		}
+		
 		svg{
 			width:100%;
 			height:auto;
@@ -142,29 +135,22 @@ h1 {
 	&.active{
 		cursor:default;
 		padding:14px 10px;
+		.wrap{
+			top:0;
+			bottom:auto;
+		}
 		&:hover{
 			opacity:1;
-			.illustration-container{
-				transform:none;
-			}
 		}
 		p{
 			display:inline;
 		}
-		.pusher{
+		.content-container{
 			display:block;
 		}
-		.content-container{
-			padding-top:12px;
-			.illustration-container{
-				margin:5px 0 5px 20px;
-				position: relative;
-				font-size:1em;
-				bottom:auto;
-				display:block;
-				opacity:1;
-			}	
-		}
+		.illustration-container{
+			display:block;
+		}	
 	}
 
 }
@@ -176,25 +162,45 @@ h1 {
 			content:'';
 			display:block;
 		}
-		.content-container{			
-			.illustration-container{
-				margin:0;
-				width:35%;
-				.illustration{
-					width:100%;
-				}
-			}
+		
+		.illustration-container{
+			position: absolute;
+		    right: 0;
+		    width: 160px;
+		    bottom: -26px;
+		    min-height: 0;
+		    top: -50px;
+		    padding: 40px 20px 0;
+		    box-sizing:border-box;
 		}
+
 
 		.pusher{
 			height:0 !important;
 		}
 		p{
 			display:inline-block;
-			width:60%;
-			margin:0;
+			margin:12px 180px 0 0;
 		}
 		
+	}
+	.resolution{
+		.wrap{
+			right:160px;
+			width: 0;
+			height: 0;
+			border-style: solid;
+			border-width: 0 46px 46px 0;
+			border-color: transparent red transparent transparent;
+			&:after{
+				display: block;
+			    content: '';
+			    height: 50px;
+			    width: 160px;
+			    background: red;
+			    margin-left: 50px;
+			}
+		}
 	}
 	#profile-selector h2{
 		position: absolute;
@@ -216,29 +222,29 @@ h1 {
 	&.category-weapons, &.category-un{
 		// background:#B9DBEA;
 		.illustration{
-			width:120px;
+			// width:120px;
 		}
 	}
 	&.category-terrorism{
 		.illustration{
-			width:160px;
+			// width:160px;
 		}
 	}
 	&.category-refugees,&.category-rights{
 		.illustration{
-			width:280px;
+			// width:280px;
 			margin-bottom:-26px;
 		}
 	}
 	&.category-health, &.category-aid{
 		.illustration{
-			width:125px;
+			// width:125px;
 		}
 	}
 	&.category-energy,&.category-food{
 		// background:#44AF6A;
 		.illustration{
-			width:100px;
+			// width:100px;
 			margin-right:20px;
 		}
 	}
