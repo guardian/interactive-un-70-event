@@ -208,12 +208,14 @@
 .gv-timeline {
     width: calc(100% - 20px);
     margin: 18px auto 0 auto;
-    border-top: 1px solid #BABABA;
-    height: 3px;
+    // border-top: 1px solid #BABABA;
+    height: 8px;
     position: relative;
-    background: linear-gradient(to right,#ccc 0,#ccc 1px,transparent 0%,transparent 100%) repeat-x left bottom;
-    background-size: 6px 5px;
-    background-position: 1px 0;
+    border-radius:4px;
+    // background: linear-gradient(to right,#ccc 0,#ccc 1px,transparent 0%,transparent 100%) repeat-x left bottom;
+    // background-size: 6px 5px;
+    // background-position: 1px 0;
+    background-color:#ECECEC;
     bottom: 10px;
     position: absolute;
     left: 10px;
@@ -221,8 +223,8 @@
 }
 
 .gv-timeline-marker {
-    width: 14px;
-    height: 14px;
+    width: 21px;
+    height: 21px;
     background-color: transparent;
     position: absolute;
     left: 30%;
@@ -240,14 +242,14 @@
     &::before {
       content: " ";
       display: block;
-      width: 10px;
-      height: 10px;
-      background-color: black;
+      width: 15px;
+      height: 15px;
+      background-color: #333;
       position: absolute;
-      left: 2px;
+      left: 3px;
       z-index: 2;
       border-radius: 50%;
-      top: 2px;
+      top: 3px;
     }
 }
 
