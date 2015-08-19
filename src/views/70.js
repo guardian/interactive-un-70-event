@@ -192,11 +192,16 @@ var BaseView = Backbone.NativeView.extend({
 		// Mobile regex from https://gist.github.com/dalethedeveloper/1503252
 		this.isMobile = !!navigator.userAgent.match(/Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile/gi);
 		console.log(this.isMobile);
+		if(this.isMobile){
+			this.el.className += " gv-isMobile" 
+		}
 
 		this.started = false;
 		this.el.innerHTML = this.html;
 		this.markerEl = this.el.querySelector( '.gv-timeline-marker' );
 		this.playedEl = this.el.querySelector( '.gv-timeline-played' );
+
+		
 
 		// Colour scaling
 		var scale = chroma.scale(['#EEE', '#B6E0FF']);
@@ -235,6 +240,12 @@ var BaseView = Backbone.NativeView.extend({
 
 		this.previousBtn = this.el.querySelector('.gv-nav-previous');
 		this.previousBtn.addEventListener('click', this.navPrevious.bind(this), false);
+
+		this.desktopNextBtn = this.el.querySelector('.gv-desktop-nav-next');
+		this.desktopNextBtn.addEventListener('click', this.navNext.bind(this), false);
+
+		this.desktopPreviousBtn = this.el.querySelector('.gv-desktop-nav-previous');
+		this.desktopPreviousBtn.addEventListener('click', this.navNext.bind(this), false);
 
 		this.introEl = this.el.querySelector('.gv-intro');
 		this.introEl.addEventListener('click', this.hideIntro.bind(this), false);
