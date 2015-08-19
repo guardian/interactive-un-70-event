@@ -107,8 +107,8 @@ h1 {
 		width: 0;
 		height: 0;
 		border-style: solid;
-		border-width: 0 0 46px 46px;
-		border-color: transparent transparent red transparent;
+		border-width: 46px 46px 0 0;
+		border-color: #eaeaea transparent transparent transparent ;
 	}
 	.illustration-container{
 		background: red;
@@ -120,8 +120,8 @@ h1 {
 
 		.illustration{
 			max-width:240px;
-			width:auto;
-			margin:0 auto;
+			width:60%;
+			margin:20px auto 0;
 		}
 		
 		svg{
@@ -190,15 +190,15 @@ h1 {
 			width: 0;
 			height: 0;
 			border-style: solid;
-			border-width: 0 46px 46px 0;
-			border-color: transparent red transparent transparent;
+			border-width: 46px 0 0 46px;
+			border-color: transparent transparent transparent #eaeaea;
 			&:after{
 				display: block;
 			    content: '';
-			    height: 50px;
+			    height:46px;
 			    width: 160px;
 			    background: red;
-			    margin-left: 50px;
+			    margin-left: 46px;
 			}
 		}
 	}
@@ -220,32 +220,28 @@ h1 {
 		width:160px;
 	}
 	&.category-weapons, &.category-un{
-		// background:#B9DBEA;
-		.illustration{
-			// width:120px;
+		.illustration-container,.wrap,.wrap:after{
+			background-color:#B9DBEA;
 		}
 	}
 	&.category-terrorism{
-		.illustration{
-			// width:160px;
+		.illustration-container,.wrap,.wrap:after{
+			background-color:#B9DBEA;
 		}
 	}
 	&.category-refugees,&.category-rights{
-		.illustration{
-			// width:280px;
-			margin-bottom:-26px;
+		.illustration-container,.wrap,.wrap:after{
+			background-color:#B9DBEA;
 		}
 	}
 	&.category-health, &.category-aid{
-		.illustration{
-			// width:125px;
+		.illustration-container,.wrap,.wrap:after{
+			background-color:#B9DBEA;
 		}
 	}
 	&.category-energy,&.category-food{
-		// background:#44AF6A;
-		.illustration{
-			// width:100px;
-			margin-right:20px;
+		.illustration-container,.wrap,.wrap:after{
+			background-color:#B9DBEA;
 		}
 	}
 }
