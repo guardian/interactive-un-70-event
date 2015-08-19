@@ -216,10 +216,15 @@
     // background-size: 6px 5px;
     // background-position: 1px 0;
     background-color:#ECECEC;
-    bottom: 10px;
+    bottom: 4px;
     position: absolute;
     left: 10px;
     pointer-events: none;
+}
+.gv-timeline-played{
+    height: 7px;
+    background: #333;
+    border-radius:4px;
 }
 
 .gv-timeline-marker {

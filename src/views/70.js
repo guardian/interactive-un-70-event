@@ -142,6 +142,7 @@ var BaseView = Backbone.NativeView.extend({
 		this.eventViews[ index ].activate();
 		var percentage = ( index  / (this.collection.models.length - 1) ) * 100;
 		this.markerEl.style.left = 'calc( ' + Math.round( percentage ) + '% - 6px)';
+		this.playedEl.style.width = Math.round( percentage ) + '%';
 		if (save) {
 			this.currentIndex = index;
 		}
@@ -195,6 +196,7 @@ var BaseView = Backbone.NativeView.extend({
 		this.started = false;
 		this.el.innerHTML = this.html;
 		this.markerEl = this.el.querySelector( '.gv-timeline-marker' );
+		this.playedEl = this.el.querySelector( '.gv-timeline-played' );
 
 		// Colour scaling
 		var scale = chroma.scale(['#EEE', '#B6E0FF']);
