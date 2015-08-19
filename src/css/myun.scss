@@ -35,9 +35,6 @@ h1 {
 		cursor:pointer;
 		font-size:0;
 
-		background-image: url(/imgs/person.svg);
-		background-size: cover;
-
 		&.active{
 			background-color: #D4E7F5;
 		}
