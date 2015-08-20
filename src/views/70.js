@@ -212,7 +212,7 @@ var BaseView = Backbone.NativeView.extend({
             this.el.appendChild( eventView.render().el );
 
 			// eventView.innerEl.setAttribute('style', '-webkit-filter: grayscale(' + (1 - i / (arr.length -1 ) ) * 100 + '%)' );
-			eventView.innerEl.style.backgroundColor = scale( i / (arr.length -1 ) ).hex();
+			// eventView.innerEl.style.backgroundColor = scale( i / (arr.length -1 ) ).hex();
 
 
             return eventView;
@@ -220,6 +220,11 @@ var BaseView = Backbone.NativeView.extend({
 
 		this.elWidth = this.el.getBoundingClientRect().width;
 		this.stepWidth = this.elWidth / this.collection.length;
+
+		if ( this.isMobile ) {
+			this.stepWidth *= 10;
+		}
+
 		this.currentIndex = this.collection.length
 
 		this.hammer = new Hammer(this.el, { drag_lock_to_axis: true });
@@ -248,7 +253,11 @@ var BaseView = Backbone.NativeView.extend({
 		this.desktopPreviousBtn.addEventListener('click', this.navNext.bind(this), false);
 
 		this.introEl = this.el.querySelector('.gv-intro');
-		this.introEl.addEventListener('click', this.hideIntro.bind(this), false);
+		if ( this.isMobile ) {
+			this.introEl.addEventListener('click', this.hideIntro.bind(this), false);
+		} else {
+			this.introEl.style.display = 'none';
+		}
 	}
 
 });
