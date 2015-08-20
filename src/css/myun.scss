@@ -200,7 +200,7 @@ h1 {
 			border-style: solid;
 			border-width: 46px 0 0 46px;
 			border-color: transparent transparent transparent #f1f1f1;
-			
+
 		}
 		.wrapblock{
 			display: block;
@@ -236,7 +236,7 @@ h1 {
 			background-color:#F4B929;
 		}
 	}
-	&.category-terrorism{
+	&.category-terrorism, &.category-war {
 		.illustration-container,.wrap,.wrapblock{
 			background-color:#DE4846;
 		}
@@ -246,11 +246,18 @@ h1 {
 			background-color:#44AF6A;
 		}
 	}
-	&.category-health, &.category-aid,&.category-money{
+	&.category-health, &.category-aid,&.category-money, &.category-environment{
 		.illustration-container,.wrap,.wrapblock{
 			background-color:#B9DBEA;
 		}
 	}
+
+	&.category-culture {
+		.illustration-container,.wrap,.wrapblock{
+			background-color:#FFAF6A;
+		}
+	}
+
 	&.category-energy,&.category-food,&.category-democracy{
 		.illustration-container,.wrap,.wrapblock{
 			background-color:#44AF6A;

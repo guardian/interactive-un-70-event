@@ -72,6 +72,11 @@ function init(el){
 				i.COUNTRIES = i.COUNTRIES.split(', ')
 			}
 
+			if (i.CATEGORY.trim() === "") {
+
+			console.log(i);
+			}
+
 			if(i.AGES.toLowerCase() === "all" || i.AGES.toLowerCase() === "everyone"){
 				i.AGES = "all"
 			}
