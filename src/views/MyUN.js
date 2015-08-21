@@ -63,13 +63,18 @@ var profiles = [{
 
 function init(el){
 	container = el;
-	getJSON('http://interactive.guim.co.uk/docsdata-test/1sGrszOfHqI11HQrtAr-7Sq_nVGgZMDN0i0x9XPF9-1s.json',function(json){
-		console.error('REPLACE WITH REAL SPREADSHEET');
-		data = json.sheets.Sheet1.map(function(i){
+	getJSON('http://interactive.guim.co.uk/docsdata-test/1iPEGi3EQBQA3biqQsu_XizgD6A-w8uffRvQ7hbDkANA.json',function(json){
+		console.warn('REPLACE WITH REAL SPREADSHEET !!!!!!!!!!');
+		data = json.sheets.myun.map(function(i){
 			if(i.COUNTRIES.toLowerCase() === "everyone" || i.COUNTRIES.toLowerCase() === "all"){
 				i.COUNTRIES = "all";
 			}else{
 				i.COUNTRIES = i.COUNTRIES.split(', ')
+			}
+
+			if (i.CATEGORY.trim() === "") {
+
+			console.log(i);
 			}
 
 			if(i.AGES.toLowerCase() === "all" || i.AGES.toLowerCase() === "everyone"){
@@ -237,8 +242,8 @@ function createFilters(){
 						if(i[category] !== "Koreas: All Others: 60 and above"){
 							filterValues[category].push(i[category]);
 						}
-						
-					}	
+
+					}
 				}
 			}
 		})

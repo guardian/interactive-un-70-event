@@ -17,11 +17,11 @@ analytics('send', 'pageview', { 'title': 'UN in 70 years' });
 var EventCollection = Backbone.Collection.extend({
 
 	parse: function(json) {
-		if ( !json || !json.hasOwnProperty('sheets') || json.hasOwnProperty('data') ) {
+		if ( !json || !json.hasOwnProperty('sheets') || json.hasOwnProperty('timline') ) {
 			return console.warn('Unexpected JSON data', json);
 		}
 
-		return json.sheets.data.map(function(item) {
+		return json.sheets.timeline.map(function(item) {
             if (item.IMAGES) {
                 item.IMAGES = item.IMAGES.replace('"', '');
                 item.IMAGES = item.IMAGES.split(',');
@@ -193,7 +193,7 @@ var BaseView = Backbone.NativeView.extend({
 		this.isMobile = !!navigator.userAgent.match(/Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile/gi);
 		console.log(this.isMobile);
 		if(this.isMobile){
-			this.el.className += " gv-isMobile" 
+			this.el.className += " gv-isMobile"
 		}
 
 		this.started = false;
@@ -201,7 +201,7 @@ var BaseView = Backbone.NativeView.extend({
 		this.markerEl = this.el.querySelector( '.gv-timeline-marker' );
 		this.playedEl = this.el.querySelector( '.gv-timeline-played' );
 
-		
+
 
 		// Colour scaling
 		var scale = chroma.scale(['#EEE', '#B6E0FF']);
@@ -212,7 +212,7 @@ var BaseView = Backbone.NativeView.extend({
             this.el.appendChild( eventView.render().el );
 
 			// eventView.innerEl.setAttribute('style', '-webkit-filter: grayscale(' + (1 - i / (arr.length -1 ) ) * 100 + '%)' );
-			eventView.innerEl.style.backgroundColor = scale( i / (arr.length -1 ) ).hex();
+			// eventView.innerEl.style.backgroundColor = scale( i / (arr.length -1 ) ).hex();
 
 
             return eventView;
@@ -220,6 +220,11 @@ var BaseView = Backbone.NativeView.extend({
 
 		this.elWidth = this.el.getBoundingClientRect().width;
 		this.stepWidth = this.elWidth / this.collection.length;
+
+		if ( this.isMobile ) {
+			this.stepWidth *= 10;
+		}
+
 		this.currentIndex = this.collection.length
 
 		this.hammer = new Hammer(this.el, { drag_lock_to_axis: true });
@@ -248,7 +253,11 @@ var BaseView = Backbone.NativeView.extend({
 		this.desktopPreviousBtn.addEventListener('click', this.navPrevious.bind(this), false);
 
 		this.introEl = this.el.querySelector('.gv-intro');
-		this.introEl.addEventListener('click', this.hideIntro.bind(this), false);
+		if ( this.isMobile ) {
+			this.introEl.addEventListener('click', this.hideIntro.bind(this), false);
+		} else {
+			this.introEl.style.display = 'none';
+		}
 	}
 
 });
@@ -260,7 +269,7 @@ module.exports = function( el ) {
 	});
 
 	var url = 'http://interactive.guim.co.uk/docsdata-test/' +
-		 '1YZKHghxCPhxbJH65K0GxzDb9-Id2t5O8hTxLw9jyN_w.json';
+		 '1iPEGi3EQBQA3biqQsu_XizgD6A-w8uffRvQ7hbDkANA.json';
 
 
 	getJSON(url, function(data) {

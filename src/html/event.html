@@ -1,7 +1,7 @@
-<div class="gv-event-inner-wrap gv-event-scale-{{ Hierarchy }}">
+
+<div class="gv-event-inner-wrap gv-event-scale-{{ Hierarchy }} gv-event-{{CATEGORY}}">
     <p class="gv-event-year"> {{ YEAR }} </p>
 	<p class="gv-event-text"> {{ HEADLINE }} </p>
-    
     <div class="gv-event-content">
 
         {{#VIDEO}}
@@ -19,9 +19,9 @@
         {{/IMAGES}}
 
         <p class="gv-event-copy"> {{ EVENT }} </p>
+    </div>
 
-        <img src="{{ svg }}" alt="" class="gv-event-symbol {{#IMAGES}}gv-event-symbol-fade{{/IMAGES}} {{#VIDEO}}gv-event-symbol-fade{{/ VIDEO}}" />
-
+    <div class="gv-event-footer" style="background-image: url({{ svg }})">
     </div>
 
 </div>
