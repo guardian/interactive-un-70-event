@@ -245,7 +245,7 @@ var BaseView = Backbone.NativeView.extend({
 		this.desktopNextBtn.addEventListener('click', this.navNext.bind(this), false);
 
 		this.desktopPreviousBtn = this.el.querySelector('.gv-desktop-nav-previous');
-		this.desktopPreviousBtn.addEventListener('click', this.navNext.bind(this), false);
+		this.desktopPreviousBtn.addEventListener('click', this.navPrevious.bind(this), false);
 
 		this.introEl = this.el.querySelector('.gv-intro');
 		this.introEl.addEventListener('click', this.hideIntro.bind(this), false);
