@@ -97,17 +97,12 @@ function init(el){
 					}
 
 
-
-
 					var item = countries.filter(function ( country ) {
 						return country[1].toLowerCase() === countryName.toLowerCase();
 					});
 					if (item.length ===0 ) {
 						console.log(countryName);
 					}
-
-
-
 
 					return countryName;
 				});
@@ -125,6 +120,8 @@ function init(el){
 			i.AGES = i.AGES.replace(' and older','')
 			i.AGES = i.AGES.replace(' and above','')
 			i.AGES = i.AGES.replace('All over ','')
+
+			i.priority = parseInt(i.priority, 10);
 
 			if(i.TYPES.toLowerCase() === "all" || i.TYPES.toLowerCase() === "everyone" || i.TYPES.toLowerCase() === "all "){
 				i.TYPES = "all"
@@ -229,11 +226,11 @@ function updateResults(){
 	var filter = app.get('activeFilter');
 	var results = data.filter(function(i){
 		if(i.COUNTRIES === "all"){
-			i.priority = 0;
+			i.orderPriority = i.priority;
 			return true
 		}else{
 			return i.COUNTRIES.filter(function(country){
-				i.priority = 1;
+				i.orderPriority = i.priority + 3;
 				return country === filter.country;
 			}).length > 0
 		}
@@ -247,9 +244,9 @@ function updateResults(){
 			return i.TYPES === "all"
 		}
 	}).sort(function(a,b){
-		if (a.priority < b.priority)
+		if (a.orderPriority < b.orderPriority)
 		    return 1;
-		  if (a.priority > b.priority)
+		  if (a.orderPriority > b.orderPriority)
 		    return -1;
 		  return 0;
 	})
