@@ -8,6 +8,7 @@
   margin: auto;
   max-height: 520px;
   -webkit-font-smoothing: antialiased;
+  color:#333;
   &.gv-isMobile{
     max-height: 460px;
   }
@@ -178,7 +179,7 @@
 
   .gv-event-inner-wrap {
     pointer-events: none;
-    background: #eee;
+    background: #f6f6f6;
     border: 1px solid rgba(0,0,0,.2);
     border-radius: 2px;
     padding: 10px 10px;
@@ -203,7 +204,7 @@
     font-weight:bold;
     margin: 0;
     font-size: 32px;
-    margin-top: 4px;
+    margin-top: 2px;
   }
   .gv-event .gv-event-content{
     font-size: 22px;
@@ -213,6 +214,7 @@
     font-family: Guardian Text Egyptian Web,Georgia,serif;
     p{
       font-size:14px;
+      line-height:20px;
     }
   }
 
@@ -301,6 +303,11 @@
     background-color: #FFF;
     border-radius: 50%;
     border: none;
+    &:hover{
+      &:before{
+        background-color:#eee;
+      }
+    }
 
     &::before {
       content: " ";
