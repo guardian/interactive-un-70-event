@@ -15,6 +15,9 @@ var svgs = {
 	un: require('../imgs/illustrations/un.svg'),
 }
 
+var countries = require('../data/countries.json');
+console.log(countries);
+
 // Analytics
 var analytics = require('../js/utils/analytics.js');
 analytics('create', 'UA-25353554-28', 'auto');
@@ -65,11 +68,45 @@ function init(el){
 	container = el;
 	getJSON('http://interactive.guim.co.uk/docsdata-test/1iPEGi3EQBQA3biqQsu_XizgD6A-w8uffRvQ7hbDkANA.json',function(json){
 		console.warn('REPLACE WITH REAL SPREADSHEET !!!!!!!!!!');
+
+		var con = {};
 		data = json.sheets.myun.map(function(i){
 			if(i.COUNTRIES.toLowerCase() === "everyone" || i.COUNTRIES.toLowerCase() === "all"){
 				i.COUNTRIES = "all";
 			}else{
-				i.COUNTRIES = i.COUNTRIES.split(', ')
+				i.COUNTRIES = i.COUNTRIES.split(',');
+				i.COUNTRIES = i.COUNTRIES.map(function(country) {
+					var countryName = country.replace(/\r|\n|\t/g, '').trim();
+
+
+					if (!con.hasOwnProperty(countryName)) {
+						con[countryName] = true;
+					}
+
+
+					if (countryName === "DRC") {
+						countryName = "Democratic Republic of the Congo"
+					}
+
+					if (countryName === "São Tomé and Príncipe") {
+						countryName = "Sao Tome and Principe"
+					}
+
+					if (countryName === "Myanmar") {
+						countryName = "Burma"
+					}
+
+
+					var item = countries.filter(function ( country ) {
+						return country[1].toLowerCase() === countryName.toLowerCase();
+					});
+					if (item.length ===0 ) {
+						console.log(countryName);
+					}
+
+					return countryName;
+				});
+				i.COUNTRIES = i.COUNTRIES.filter(function(country) { return country.trim !== ""; });
 			}
 
 			if (i.CATEGORY.trim() === "") {
@@ -84,11 +121,15 @@ function init(el){
 			i.AGES = i.AGES.replace(' and above','')
 			i.AGES = i.AGES.replace('All over ','')
 
+			i.priority = parseInt(i.priority, 10);
+
 			if(i.TYPES.toLowerCase() === "all" || i.TYPES.toLowerCase() === "everyone" || i.TYPES.toLowerCase() === "all "){
 				i.TYPES = "all"
 			}
 			return i;
 		});
+
+		console.log(con);
 		loadPage();
 		// createFilters();
 	});
@@ -106,7 +147,7 @@ function loadPage(){
 			},
 			resolutions: [],
 			filters: {
-				COUNTRIES: ["Ethiopia","Afghanistan","Albania","Algeria","Angola","Antigua","Argentina","Armenia","ArmeniaI","Australia","Azerbaijan","Bahrain","Bangladesh","Barbados","Belgium","Belize","Benin","Bhutan","Bolivia","Bosnia","Botswana","Brazil","Britain","Bulgaria","Burkina Faso","Burma","Burundi","CAR","Cambodia","Cameroon","Canada","Cap Verde","Cape Verde","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo","Cook Islands","Costa Rica","Croatia","Cuba","Cyprus","Czech Republic","DRC","Denmark","Djibouti","Dominican Republic","East Timor","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Ethiopia","Fiji","France","French Guiana","Gabon","Gambia","Georgia","Ghana","Greece","Guatemala","Guinea","Guinea-Bissau","Guyana","Haiti","Honduras","Hungary","India","Indonesia","Iran","Iraq","Israel","Italy","Ivory Coast","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Korea","Kosovo","Kuwait","Kyrgyzstan","Laos","Lebanon","Lesotho","Liberia","Libya","Luxembourg","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Marshall islands","Mauritania","Mauritiana","Mauritius","Mexico","Micronesia","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Myanmar","Namibia","Nepal","Netherlands Antilles","New Zealand","Nicaragua","Niger","Nigeria","North Korea","Norway","Oman","Pakistan","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania","Russia","Rwanda","Saint Vincent & Grenadines","Samoa","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Sierre Leone","Slovakia","Solomon Islands","Somalia","South \nAfrica","South Africa","South Korea","South Sudan","Sri Lanka","Sudan","Suriname","Swaziland","Sweden","Syria","São Tomé and Príncipe","Tajikistan","Tanzania","Thailand","Togo","Tonga","Trinidad & Tobago","Tunisia","Turkey","Turks and Caicos","UK","US","Uganda","Ukraine","Uruguay","Uzbekistan","Vanuatu","Venezuela","Vietnam","Western Sahara","Yemen","Zambia","Zimbabwe","the Netherlands"],
+				COUNTRIES: countries.map(function(country) { return country[1]; } ),
 				AGES: [12,17,18,23,24,25,26,55,60],
 				TYPES: ["Male","Female"]
 			},
@@ -185,11 +226,11 @@ function updateResults(){
 	var filter = app.get('activeFilter');
 	var results = data.filter(function(i){
 		if(i.COUNTRIES === "all"){
-			i.priority = 0;
+			i.orderPriority = i.priority;
 			return true
 		}else{
 			return i.COUNTRIES.filter(function(country){
-				i.priority = 1;
+				i.orderPriority = i.priority + 3;
 				return country === filter.country;
 			}).length > 0
 		}
@@ -203,9 +244,9 @@ function updateResults(){
 			return i.TYPES === "all"
 		}
 	}).sort(function(a,b){
-		if (a.priority < b.priority)
+		if (a.orderPriority < b.orderPriority)
 		    return 1;
-		  if (a.priority > b.priority)
+		  if (a.orderPriority > b.orderPriority)
 		    return -1;
 		  return 0;
 	})
