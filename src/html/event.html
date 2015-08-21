@@ -1,19 +1,7 @@
-
-<div class="gv-event-inner-wrap gv-event-scale-{{ Hierarchy }} gv-event-{{CATEGORY}}">
+<div class="gv-event gv-event-scale-{{ Hierarchy }} gv-event-{{CATEGORY}}">
     <p class="gv-event-year"> {{ YEAR }} </p>
 	<p class="gv-event-text"> {{ HEADLINE }} </p>
     <div class="gv-event-content">
-
-        {{#VIDEO}}
-        <div class="gv-event-tv">
-            <div class="gv-event-tv-screen"></div>
-            <video
-                class="gv-event-video"
-                poster="http://cache1.asset-cache.net/fk/504867031.jpg?v=1&c=IWSAsset&k=1&f=3&d=9EA8DDC6D1A6F4FB94BA7186F928488CA946901E2639B6F4ADCA974C8614DB0F"
-            ></video>
-        </div>
-        {{/VIDEO}}
-
         {{#IMAGES}}
             <img src="{{ . }}" width="640" alt="" class="gv-event-images" />
         {{/IMAGES}}
@@ -21,7 +9,5 @@
         <p class="gv-event-copy"> {{ EVENT }} </p>
     </div>
 
-    <div class="gv-event-footer" style="background-image: url({{ svg }})">
-    </div>
-
+    <div class="gv-event-footer" style="background-image: url({{ svg }})"></div>
 </div>

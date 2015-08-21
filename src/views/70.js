@@ -53,8 +53,6 @@ var svgs = {
 
 var EventView = Backbone.NativeView.extend({
 
-	className: 'gv-event',
-
 	activate: function(model) {
 		var targetIndex = this.parent.eventViews.indexOf(this);
 
@@ -86,7 +84,10 @@ var EventView = Backbone.NativeView.extend({
 
 		this.model.set('svg', svgs[ this.model.get('CATEGORY') ]);
 
-		this.el.innerHTML = Mustache.render(eventHTML, this.model.attributes);
+		var el = document.createElement('div');
+		el.innerHTML = Mustache.render(eventHTML, this.model.attributes);
+		el.innerHTML = el.innerHTML.trim();
+		this.el = el.firstChild;
 
 		var categoryName = this.model.get('CATEGORY');
 		if (categoryName && categoryName.trim().length < 1) {
