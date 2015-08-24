@@ -16,7 +16,6 @@ var svgs = {
 }
 
 var countries = require('../data/countries.json');
-console.log(countries);
 
 // Analytics
 var analytics = require('../js/utils/analytics.js');
@@ -225,12 +224,24 @@ function loadPage(){
 function updateResults(){
 	var filter = app.get('activeFilter');
 	var results = data.filter(function(i){
+
+		// Special case some countries and headlines
+		if (filter.country === 'South Africa' && !!(i.HEADLINE.search('HIV and Aid') > -1)) {
+			i.orderPriority = 10;
+			return true;
+		}
+
 		if(i.COUNTRIES === "all"){
 			i.orderPriority = i.priority;
 			return true
 		}else{
 			return i.COUNTRIES.filter(function(country){
 				i.orderPriority = i.priority + 3;
+
+
+
+
+
 				return country === filter.country;
 			}).length > 0
 		}
