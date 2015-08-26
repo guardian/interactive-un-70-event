@@ -359,7 +359,7 @@
   }
 }
 .gv-intro {
-    background-color: rgba(255, 255, 255, 0.94);
+    // background-color: rgba(255, 255, 255, 0.94);
     z-index: 110;
     position: absolute;
     width: 100%;
@@ -378,7 +378,7 @@
 
 .gv-swipe-hint {
   position: absolute;
-  top: 65%;
+  top: 45%;
   left: 50%;
   height: 90px;
   width: 90px;
@@ -388,6 +388,13 @@
   transform: translate(-50%, -50%);
   transform-origin: 50% 100%;
   animation: swipe 1.4s infinite;
-  transition: 600ms opacity;
+  opacity: 0.7;
+
+}
+
+@keyframes swipe {
+    0% {left: 50%;}
+    90% {left: 35%;}
+    100% {left: 50%;}
 }
 
