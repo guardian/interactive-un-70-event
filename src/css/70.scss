@@ -182,8 +182,8 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 160px;
-  background-size: auto 62%;
+  height: 200px;
+  background-size: contain;
   background-position: 50% 50%;
   background-repeat: no-repeat;
   background-color: #878787;
@@ -191,13 +191,28 @@
 }
 
 
-.gv-event-weapons .gv-event-footer {
+.gv-event-weapons .gv-event-footer,
+.gv-event-crimes .gv-event-footer  {
+  background-color: #878787;
+}
+
+.gv-event-worm .gv-event-footer,
+.gv-event-smallpox .gv-event-footer {
   background-color: #ff4943;
 }
 
-.gv-event-un .gv-event-footer {
+.gv-event-un .gv-event-footer,
+.gv-event-environment .gv-event-footer,
+.gv-event-food .gv-event-footer,
+.gv-event-aid .gv-event-footer,
+.gv-event-energy .gv-event-footer  {
   background-color: #b6e0ff;
 }
+
+.gv-event-refugees .gv-event-footer {
+  background-color: #FFE2B6;
+}
+
 
 
 .gv-event-tv {

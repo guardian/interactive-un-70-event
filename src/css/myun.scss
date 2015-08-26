@@ -6,6 +6,11 @@ h1 {
 	@include fs-header(4);
 }
 
+$category-red: #FF4943;
+$category-blue: #B6E0FF;
+$category-grey: #878787;
+$category-beige: #FFE2B6;
+
 #profile-selector{
 	border-top:1px solid #eee;
 	padding:12px 0;
@@ -116,7 +121,6 @@ h1 {
 		margin-right:44px;
 	}
 	.illustration-container{
-		background: red;
 		margin: 8px -10px;
 		padding:20px 0 0;
 		position: relative;
@@ -171,10 +175,11 @@ h1 {
 		.illustration-container{
 			position: absolute;
 		    right: 0;
-		    bottom: -26px;
+		    bottom: 0;
 		    top:0;
 		    min-height: 0;
-		    padding: 0 20px;
+		    padding: 0;
+			margin: 0;
 		    box-sizing:border-box;
 		    width:160px;
 		    .illustration{
@@ -231,43 +236,105 @@ h1 {
 	.illustration{
 		// width:160px;
 	}
-	&.category-weapons, &.category-un{
+	&.category-weapons, &.category-nuclear, &.category-un{
 		.illustration-container,.wrap,.wrapblock{
-			background-color:#F4B929;
+			background-color: $category-grey;
 		}
 	}
 	&.category-terrorism, &.category-war {
 		.illustration-container,.wrap,.wrapblock{
-			background-color:#DE4846;
+			background-color: $category-grey;
 		}
 	}
-	&.category-refugees,&.category-rights{
+	&.category-refugees,&.category-rights, &.category-election{
 		.illustration-container,.wrap,.wrapblock{
-			background-color:#44AF6A;
+			background-color: $category-beige;
 		}
 	}
-	&.category-health, &.category-aid,&.category-money, &.category-environment{
+	&.category-health, &.category-worm, &.category-aid,&.category-money{
 		.illustration-container,.wrap,.wrapblock{
-			background-color:#B9DBEA;
+			background-color:  $category-blue;
 		}
 	}
 
 	&.category-culture {
 		.illustration-container,.wrap,.wrapblock{
-			background-color:#FFAF6A;
+			background-color:$category-beige;
 		}
 	}
 
-	&.category-energy,&.category-food,&.category-democracy{
+	&.category-energy,&.category-food,&.category-democracy, &.category-environment{
 		.illustration-container,.wrap,.wrapblock{
 			background-color:#44AF6A;
 		}
 	}
 
 
-	&.category-energy,&.category-peace{
+	&.category-energy,&.category-peace, {
 		.illustration-container,.wrap,.wrapblock{
-			background-color:#44AFFF;
+			background-color: $category-blue;
 		}
 	}
 }
+
+
+.illustration-container {
+	background-position: 50% 50%;
+    background-size: contain;
+    background-repeat: no-repeat;
+	background-blend-mode: luminosity;
+}
+
+.category-aid .illustration-container {
+	background-image: url(/imgs/illustrations/aid.svg#green);
+}
+
+.category-food .illustration-container {
+	background-image: url(/imgs/illustrations/food.svg);
+}
+
+.category-health .illustration-container {
+	background-image: url(/imgs/illustrations/small-pox.svg);
+}
+
+.category-culture .illustration-container {
+	background-image: url(/imgs/illustrations/aid.svg);
+}
+
+.category-rights .illustration-container {
+	background-image: url(/imgs/illustrations/human-rights.svg);
+}
+
+
+.category-peace .illustration-container {
+	background-image: url(/imgs/illustrations/peace.svg);
+}
+
+.category-refugees .illustration-container {
+	background-image: url(/imgs/illustrations/refugees.svg);
+}
+
+.category-environment .illustration-container {
+	background-image: url(/imgs/illustrations/ozone-layer.svg);
+}
+
+.category-missle .illustration-container {
+	background-image: url(/imgs/illustrations/russian-missle.svg);
+}
+
+.category-weapons .illustration-container {
+	background-image: url(/imgs/illustrations/weapons.svg);
+}
+
+.category-nuclear .illustration-container {
+	background-image: url(/imgs/illustrations/nuclear-bomb.svg);
+}
+
+.category-election .illustration-container {
+	background-image: url(/imgs/illustrations/election.svg);
+}
+
+.category-worm .illustration-container {
+	background-image: url(/imgs/illustrations/guinea-worm.svg);
+}
+

@@ -2,17 +2,17 @@ var getJSON = require('../js/utils/getjson');
 var Ractive = require('ractive');
 var html = require('../html/myUN.html');
 var svgs = {
-	weapons: require('../imgs/illustrations/aid.svg'),
-	democracy: require('../imgs/illustrations/democracy.svg'),
-	energy: require('../imgs/illustrations/energy.svg'),
-	food: require('../imgs/illustrations/food.svg'),
-	aid: require('../imgs/illustrations/aid.svg'),
-	health: require('../imgs/illustrations/health.svg'),
-	money: require('../imgs/illustrations/money.svg'),
-	refugees: require('../imgs/illustrations/refugees.svg'),
-	rights: require('../imgs/illustrations/rights.svg'),
-	terrorism: require('../imgs/illustrations/terrorism.svg'),
-	un: require('../imgs/illustrations/un.svg'),
+	// weapons: require('../imgs/illustrations/aid.svg'),
+	// democracy: require('../imgs/illustrations/democracy.svg'),
+	// energy: require('../imgs/illustrations/energy.svg'),
+	// food: require('../imgs/illustrations/food.svg'),
+	// aid: require('../imgs/illustrations/aid.svg'),
+	// health: require('../imgs/illustrations/health.svg'),
+	// money: require('../imgs/illustrations/money.svg'),
+	// refugees: require('../imgs/illustrations/refugees.svg'),
+	// rights: require('../imgs/illustrations/rights.svg'),
+	// terrorism: require('../imgs/illustrations/terrorism.svg'),
+	// un: require('../imgs/illustrations/un.svg'),
 }
 
 var countries = require('../data/countries.json');
@@ -70,6 +70,30 @@ function init(el){
 
 		var con = {};
 		data = json.sheets.myun.map(function(i){
+
+				// illustrations
+			if (i.HEADLINE.search('missle') > -1) {
+				i.CATEGORY = 'missle';
+			}
+			if (i.HEADLINE.search('smallpox') > -1) {
+				i.CATEGORY = 'smallpox';
+			}
+			if (i.HEADLINE.search('worm') > -1 || i.HEADLINE.search('Immunisation') > -1) {
+				i.CATEGORY = 'worm';
+			}
+
+			console.log(i.HEADLINE.toLowerCase());
+			if (i.HEADLINE.toLowerCase().search('nuclear') > -1) {
+				i.CATEGORY = 'nuclear';
+			}
+			if (i.HEADLINE.toLowerCase().search('crimes') > -1) {
+				i.CATEGORY = 'crimes';
+			}
+			if (i.ACHIEVEMENT.toLowerCase().search('election') > -1) {
+				i.CATEGORY = 'election';
+			}
+
+
 			if(i.COUNTRIES.toLowerCase() === "everyone" || i.COUNTRIES.toLowerCase() === "all"){
 				i.COUNTRIES = "all";
 			}else{
@@ -100,7 +124,7 @@ function init(el){
 						return country[1].toLowerCase() === countryName.toLowerCase();
 					});
 					if (item.length ===0 ) {
-						console.log(countryName);
+						// console.log(countryName);
 					}
 
 					return countryName;
@@ -110,8 +134,9 @@ function init(el){
 
 			if (i.CATEGORY.trim() === "") {
 
-			console.log(i);
 			}
+
+			// console.log(i.CATEGORY);
 
 			if(i.AGES.toLowerCase() === "all" || i.AGES.toLowerCase() === "everyone"){
 				i.AGES = "all"
