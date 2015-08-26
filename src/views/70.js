@@ -228,7 +228,11 @@ var BaseView = Backbone.NativeView.extend({
 
 		this.currentIndex = this.collection.length
 
-		this.hammer = new Hammer(this.el, { drag_lock_to_axis: true });
+		if ( this.isMobile ) {
+			this.hammer = new Hammer(this.el, { drag_lock_to_axis: true });
+		} else {
+			this.hammer = new Hammer(this.el.querySelector('.gv-timeline'), { drag_lock_to_axis: true });
+		}
 		this.hammer.get('pan').set({ direction: Hammer.DIRECTION_HORIZONTAL });
 		this.hammer.on('panleft panright panend', this.pan.bind(this) );
 		this.hammer.on('panstart', function() {

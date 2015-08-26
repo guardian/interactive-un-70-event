@@ -245,6 +245,10 @@
     outline:none;
     cursor:pointer;
 
+    &:hover {
+      background-color: #0D89D2;
+    }
+
     &.disabled {
       opacity: 0.3;
       cursor: inherit;
