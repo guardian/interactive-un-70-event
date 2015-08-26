@@ -177,6 +177,8 @@
     }
 }
 
+//
+
 .gv-event-footer {
   position: absolute;
   bottom: 0;
@@ -186,33 +188,9 @@
   background-size: contain;
   background-position: 50% 50%;
   background-repeat: no-repeat;
-  background-color: #878787;
-  background-blend-mode: luminosity;
+
+  @import 'modules/_categories.scss';
 }
-
-
-.gv-event-weapons .gv-event-footer,
-.gv-event-crimes .gv-event-footer  {
-  background-color: #878787;
-}
-
-.gv-event-worm .gv-event-footer,
-.gv-event-smallpox .gv-event-footer {
-  background-color: #ff4943;
-}
-
-.gv-event-un .gv-event-footer,
-.gv-event-environment .gv-event-footer,
-.gv-event-food .gv-event-footer,
-.gv-event-aid .gv-event-footer,
-.gv-event-energy .gv-event-footer  {
-  background-color: #b6e0ff;
-}
-
-.gv-event-refugees .gv-event-footer {
-  background-color: #FFE2B6;
-}
-
 
 
 .gv-event-tv {

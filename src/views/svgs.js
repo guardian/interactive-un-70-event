@@ -22,12 +22,19 @@ module.exports = {
 	nobel: '/imgs/illustrations/nobel-prize.svg',
 	education: '/imgs/illustrations/education.svg',
 	children: '/imgs/illustrations/children.svg',
-	worm: '/imgs/illustrations/guinea-worm.svg',
+	guineaworm: '/imgs/illustrations/guinea-worm.svg',
 	election: '/imgs/illustrations/election.svg',
 	greenhouse: '/imgs/illustrations/greenhouse-gases.svg',
 	ebola: '/imgs/illustrations/ebola.svg',
 	marine: '/imgs/illustrations/marine-environment.svg',
 	missiles: '/imgs/illustrations/missiles.svg',
 	middleeast: '/imgs/illustrations/arafat.svg',
-	culture: ''
+	lockerbie:  '/imgs/illustrations/lockerbie.svg',
+	culture: '/imgs/illustrations/cultural-heritage.svg',
+	surrender: '/imgs/illustrations/surrender.svg',
+	landmine: '/imgs/illustrations/landmine.svg',
+	malaria: '/imgs/illustrations/malaria.svg',
+	hiv: '/imgs/illustrations/hiv.svg',
+	monument: '/imgs/illustrations/monument.svg'
 };
+

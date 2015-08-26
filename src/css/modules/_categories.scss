@@ -1,0 +1,64 @@
+$category-red: #FF4943;
+$category-blue: #6089b0;
+$category-grey: #878787;
+$category-beige: #FFE2B6;
+$category-green: #00d373;
+$category-light-grey: #f1f1f1;
+$category-yellow: #ffbf0d;
+
+
+&.aid,
+&.health,
+&.food,
+&.refugees,
+&.peace {
+	background-color: $category-green;
+}
+
+
+&.war,
+&.nuclear,
+&.missiles,
+&.terrorism,
+&.crimes,
+&.weapons,
+&.landmine,
+&.surrender
+	{
+	background-color: $category-grey;
+}
+
+&.smallpox,
+&.guineaworm,
+&.ebola,
+&.aids,
+&.hiv,
+&.malaria {
+	background-color: $category-red;
+}
+
+&.environment,
+&.energy,
+&.marine,
+&.greenhouse,
+&.culture
+	{
+	background-color: $category-yellow;
+}
+
+
+&.womensrights,
+&.rights,
+&.un,
+&.middleeast,
+&.children,
+&.money,
+&.nobel,
+&.lockerbie,
+&.democracy,
+&.monument,
+&.election
+
+	{
+	background-color: $category-blue;
+}

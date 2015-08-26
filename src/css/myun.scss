@@ -165,51 +165,7 @@ $category-yellow: #ffbf0d;
 	// background-blend-mode: luminosity;
 	min-height: 120px;
 
-
-	&.aid,
-	&.health,
-	&.food,
-	&.refugees {
-		background-color: $category-green;
-	}
-
-
-	&.war,
-	&.nuclear,
-	&.missiles,
-	&.terrorism,
-	&.crimes
-	 {
-		background-color: $category-grey;
-	}
-
-	&.smallpox,
-	&.worm,
-	&.ebola,
-	&.aids {
-		background-color: $category-red;
-	}
-
-	&.environment,
-	&.energy,
-	&.marine,
-	&.greenhouse,
-	&.culture
-	 {
-		background-color: $category-yellow;
-	}
-
-
-	&.womensrights,
-	&.rights,
-	&.un,
-	&.middleeast,
-	&.children,
-	&.children,
-	 {
-		background-color: $category-blue;
-	}
-
+	@import 'modules/_categories.scss';
 }
 
 @media(min-width:480px){

@@ -79,9 +79,7 @@ function init(el){
 			if (i.HEADLINE.search('smallpox') > -1) {
 				i.CATEGORY = 'smallpox';
 			}
-			if (i.HEADLINE.search('worm') > -1 || i.HEADLINE.search('Immunisation') > -1) {
-				i.CATEGORY = 'worm';
-			}
+			
 
 			if (i.HEADLINE.toLowerCase().search('nuclear') > -1) {
 				i.CATEGORY = 'nuclear';
