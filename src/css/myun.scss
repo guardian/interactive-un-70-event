@@ -7,11 +7,12 @@ h1 {
 }
 
 $category-red: #FF4943;
-$category-blue: #B6E0FF;
+$category-blue: #6089b0;
 $category-grey: #878787;
 $category-beige: #FFE2B6;
 $category-green: #00d373;
 $category-light-grey: #f1f1f1;
+$category-yellow: #ffbf0d;
 
 #profile-selector{
 	border-top:1px solid #eee;
@@ -166,14 +167,47 @@ $category-light-grey: #f1f1f1;
 
 
 	&.aid,
-	&.health {
+	&.health,
+	&.food,
+	&.refugees {
 		background-color: $category-green;
 	}
 
 
 	&.war,
-	&.nuclear {
+	&.nuclear,
+	&.missiles,
+	&.terrorism,
+	&.crimes
+	 {
 		background-color: $category-grey;
+	}
+
+	&.smallpox,
+	&.worm,
+	&.ebola,
+	&.aids {
+		background-color: $category-red;
+	}
+
+	&.environment,
+	&.energy,
+	&.marine,
+	&.greenhouse,
+	&.culture
+	 {
+		background-color: $category-yellow;
+	}
+
+
+	&.womensrights,
+	&.rights,
+	&.un,
+	&.middleeast,
+	&.children,
+	&.children,
+	 {
+		background-color: $category-blue;
 	}
 
 }
@@ -251,8 +285,3 @@ $category-light-grey: #f1f1f1;
 	}
 
 }
-
-
-
-// Categories
-
