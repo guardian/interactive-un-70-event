@@ -49,6 +49,7 @@ $category-light-grey: #f1f1f1;
 	p{
 		line-height:1.6em;
 		margin:0;
+
 		select {
 		   -webkit-appearance: none;
 		   -moz-appearance: none;
@@ -76,10 +77,8 @@ $category-light-grey: #f1f1f1;
 }
 
 .resolution{
-	width: 40%;
 	box-sizing: border-box;
 	cursor:pointer;
-	padding: 4px;
 	border-bottom: 1px solid #EEE;
 
 	h4{
@@ -93,57 +92,35 @@ $category-light-grey: #f1f1f1;
 		font-weight:100;
 		line-height: 1em;
 	}
+
 	p{
 		@include fs-bodyCopy(1);
-		margin: 1em 20px;
+		margin: 0 0 1em 0;
 	}
+
 	.content-container{
-		position: relative;
 		display: none;
-		background-color: #f1f1f1;
-		position: absolute;
-		top: 0;
-		right: 0;
-		width: calc(60% - 10px);
-		z-index: 1;
 		box-sizing: border-box;
 	}
 
 	.resolution-title {
 		font-weight: 100;
+		padding: 4px 0;
+
 	}
 
 	.content-title {
 		border-bottom: 1px solid #999;
 		margin: 1em 20px;
 		padding-bottom: 9px;
+		display: none;
 	}
 
 
 	.title-container{
 		margin-right:44px;
 	}
-	.illustration-container{
-		margin: 8px -10px;
-		padding:20px 0 0;
-		position: relative;
-		display:none;
-		min-height:100px;
 
-		.illustration{
-			margin:20px auto 0;
-			height:140px;
-			max-width:240px;
-		}
-
-		svg{
-			height:100%;
-			width:100%;
-			path{
-				transition: fill 0.5s;
-			}
-		}
-	}
 	&.active{
 		cursor:default;
 
@@ -169,6 +146,9 @@ $category-light-grey: #f1f1f1;
 
 }
 
+#profile-filter {
+	margin-top: 10px;
+}
 
 #resolution-list {
 	position: relative;
@@ -177,125 +157,12 @@ $category-light-grey: #f1f1f1;
 	margin-top: 20px;
 }
 
-@media(min-width:480px){
-	.resolution.active{
-
-		.illustration-container{
-			position: absolute;
-		    right: 0;
-		    bottom: 0;
-		    top:0;
-		    min-height: 0;
-		    padding: 0;
-			margin: 0;
-		    box-sizing:border-box;
-		    width:160px;
-		    .illustration{
-		    	height:auto;
-		    }
-		}
-
-
-		.pusher{
-			height:0 !important;
-		}
-
-
-	}
-	.resolution{
-		.wrap{
-			right:160px;
-			width: 0;
-			height: 0;
-			border-style: solid;
-			border-width: 46px 0 0 46px;
-			border-color: transparent transparent transparent #f1f1f1;
-
-		}
-		.wrapblock{
-			display: block;
-		    content: '';
-		    height:46px;
-		    width: 160px;
-		    background: red;
-		    position: absolute;
-		    right:0;
-		    top:0;
-		    margin-left: 46px;
-		}
-	}
-
-	#profile-selector ul,#profile-filter{
-		float: left;
-	}
-
-	#profile-filter {
-		max-width: 300px;
-		margin-left: 20px;
-	}
-
-
-	.filter-gender,
-	.filter-country {
-		display: block;
-	}
-
-}
-
-
-// Categories
-.resolution{
-	.illustration{
-		// width:160px;
-	}
-	&.category-weapons, &.category-nuclear, &.category-un{
-		.illustration-container,.wrap,.wrapblock{
-			background-color: $category-grey;
-		}
-	}
-	&.category-terrorism, &.category-war {
-		.illustration-container,.wrap,.wrapblock{
-			background-color: $category-grey;
-		}
-	}
-	&.category-refugees,&.category-rights, &.category-election{
-		.illustration-container,.wrap,.wrapblock{
-			background-color: $category-beige;
-		}
-	}
-	&.category-health, &.category-worm, &.category-aid,&.category-money{
-		.illustration-container,.wrap,.wrapblock{
-			background-color:  $category-blue;
-		}
-	}
-
-	&.category-culture {
-		.illustration-container,.wrap,.wrapblock{
-			background-color:$category-beige;
-		}
-	}
-
-	&.category-energy,&.category-food,&.category-democracy, &.category-environment{
-		.illustration-container,.wrap,.wrapblock{
-			background-color:#44AF6A;
-		}
-	}
-
-
-	&.category-energy,&.category-peace, {
-		.illustration-container,.wrap,.wrapblock{
-			background-color: $category-blue;
-		}
-	}
-}
-
-
 .resolution-illustration {
 	background-position: 50% 50%;
     background-size: contain;
     background-repeat: no-repeat;
 	// background-blend-mode: luminosity;
-	min-height: 200px;
+	min-height: 120px;
 
 
 	&.aid,
@@ -311,5 +178,81 @@ $category-light-grey: #f1f1f1;
 
 }
 
+@media(min-width:480px){
+	.resolution {
+		width: 40%;
+		padding: 4px;
 
+		p{
+			@include fs-bodyCopy(1);
+			margin: 1em 20px;
+		}
+
+		&.active{
+			cursor:default;
+
+			.content-title {
+				display: block;
+			}
+
+			.resolution-title {
+				font-weight: 700;
+				position: relative;
+				padding-left: 6px;
+
+				&::before {
+					content: " ";
+					width: 10px;
+					height: 10px;
+					border-radius: 50%;
+					background-color: $category-grey;
+					display: block;
+					position: absolute;
+					left: -9px;
+					top: 0.2em;
+				}
+			}
+		}
+	}
+
+	#profile-selector ul,#profile-filter{
+		float: left;
+	}
+
+	#profile-filter {
+		max-width: 300px;
+		margin-left: 20px;
+		margin-top: 0;
+	}
+
+
+	.filter-gender,
+	.filter-country {
+		display: block;
+	}
+
+
+	.content-container{
+		position: relative;
+		display: none;
+		background-color: #f1f1f1;
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: calc(60% - 10px);
+		z-index: 1;
+		box-sizing: border-box;
+	}
+
+
+	.resolution-illustration {
+		background-size: contain;
+		min-height: 200px;
+	}
+
+}
+
+
+
+// Categories
 
