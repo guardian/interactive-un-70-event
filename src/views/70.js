@@ -125,6 +125,21 @@ var BaseView = Backbone.NativeView.extend({
 	},
 
 	showCard: function(index, save) {
+
+		if (index - 1 < 0) {
+			this.desktopPreviousBtn.classList.add('disabled');
+		} else {
+			this.desktopPreviousBtn.classList.remove('disabled');
+		}
+
+		if (index + 1 >= this.collection.length) {
+			this.desktopNextBtn.classList.add('disabled');
+		} else {
+			this.desktopNextBtn.classList.remove('disabled');
+		}
+
+
+
 		this.eventViews[ index ].activate();
 		var percentage = ( index  / (this.collection.models.length - 1) ) * 100;
 		this.markerEl.style.left = 'calc( ' + Math.round( percentage ) + '% - 6px)';
@@ -223,11 +238,6 @@ var BaseView = Backbone.NativeView.extend({
 
 
 
-		//this.currentIndex = this.collection.length - 1;
-		this.currentIndex = 0;
-		this.showCard(this.currentIndex, true);
-		this.nextBtn = this.el.querySelector('.gv-nav-next');
-		this.nextBtn.addEventListener('click', this.navNext.bind(this), false);
 
 		this.previousBtn = this.el.querySelector('.gv-nav-previous');
 		this.previousBtn.addEventListener('click', this.navPrevious.bind(this), false);
@@ -244,6 +254,12 @@ var BaseView = Backbone.NativeView.extend({
 		} else {
 			this.introEl.style.display = 'none';
 		}
+
+		//this.currentIndex = this.collection.length - 1;
+		this.currentIndex = 0;
+		this.showCard(this.currentIndex, true);
+		this.nextBtn = this.el.querySelector('.gv-nav-next');
+		this.nextBtn.addEventListener('click', this.navNext.bind(this), false);
 	}
 
 });

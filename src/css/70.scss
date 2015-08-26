@@ -244,6 +244,11 @@
     line-height:1em;
     outline:none;
     cursor:pointer;
+
+    &.disabled {
+      opacity: 0.3;
+      cursor: inherit;
+    }
   }
 }
 .gv-timeline {
