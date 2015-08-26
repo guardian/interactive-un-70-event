@@ -16,6 +16,7 @@ var svgs = {
 }
 
 var countries = require('../data/countries.json');
+var svgs = require('./svgs.js');
 
 // Analytics
 var analytics = require('../js/utils/analytics.js');
@@ -71,7 +72,7 @@ function init(el){
 		var con = {};
 		data = json.sheets.myun.map(function(i){
 
-				// illustrations
+			// illustrations
 			if (i.HEADLINE.search('missle') > -1) {
 				i.CATEGORY = 'missle';
 			}
@@ -82,7 +83,6 @@ function init(el){
 				i.CATEGORY = 'worm';
 			}
 
-			console.log(i.HEADLINE.toLowerCase());
 			if (i.HEADLINE.toLowerCase().search('nuclear') > -1) {
 				i.CATEGORY = 'nuclear';
 			}
@@ -92,6 +92,10 @@ function init(el){
 			if (i.ACHIEVEMENT.toLowerCase().search('election') > -1) {
 				i.CATEGORY = 'election';
 			}
+
+
+
+			i.SVG = svgs[i.CATEGORY];
 
 
 			if(i.COUNTRIES.toLowerCase() === "everyone" || i.COUNTRIES.toLowerCase() === "all"){
@@ -293,6 +297,7 @@ function updateResults(){
 	}
 	clickedPersona = false;
 	app.set('activeResolution',0)
+	console.log(results);
 	app.set('resolutions', results);
 }
 

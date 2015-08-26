@@ -9,7 +9,7 @@
 		</ul>
 		<div id="profile-filter">
 			<p>
-				<select value='{{activeFilter.gender}}'>
+				<select value='{{activeFilter.gender}}' class="filter-gender">
 					{{#each filters.TYPES}}
 						<option value="{{.}}">{{{.}}}</option>
 					{{/each}}
@@ -20,26 +20,25 @@
 						<option value="{{.}}">{{{.}}}</option>
 					{{/each}}
 				</select>
-				living in
+				<span class="filter-country">
+					living in
 				<select value='{{activeFilter.country}}'>
 					{{#each filters.COUNTRIES}}
 						<option value="{{.}}">{{{.}}}</option>
 					{{/each}}
 				</select>
+				</span>
 			</p>
 		</div>
 	</div>
 	<div id="resolution-list">
 	{{#each resolutions:i}}
 		<div class="resolution resolution-{{i}} {{#if i===activeResolution}}active{{/if}} category-{{CATEGORY}}" on-click="expandResolution">
-			<div class="wrap"></div>
-			<div class="wrapblock"></div>
-			<div class="title-container">
-				<h4>{{HEADLINE}}</h4>
-			</div>
-			<div class="illustration-container"></div>
+			<h4 class="resolution-title">{{HEADLINE}}</h4>
 			<div class="content-container">
+				<h4 class="content-title">{{HEADLINE}}</h4>
 				<p>{{ACHIEVEMENT}}</p>
+				<div class="resolution-illustration {{ CATEGORY }}" style="background-image: url({{ SVG }});"></div>
 			</div>
 		</div>
 	{{/each}}
