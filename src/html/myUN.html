@@ -9,6 +9,7 @@
 		</ul>
 		<div id="profile-filter">
 			<p>
+				I am a 
 				<select value='{{activeFilter.gender}}' class="filter-gender">
 					{{#each filters.TYPES}}
 						<option value="{{.}}">{{{.}}}</option>
@@ -28,6 +29,7 @@
 					{{/each}}
 				</select>
 				</span>
+				. This is what the UN has done for mean:
 			</p>
 		</div>
 	</div>
@@ -37,8 +39,8 @@
 			<h4 class="resolution-title">{{HEADLINE}}</h4>
 			<div class="content-container">
 				<h4 class="content-title">{{HEADLINE}}</h4>
-				<p>{{ACHIEVEMENT}}</p>
 				<div class="resolution-illustration {{ CATEGORY }}" style="background-image: url({{ SVG }});"></div>
+				<p>{{ACHIEVEMENT}}</p>
 			</div>
 		</div>
 	{{/each}}

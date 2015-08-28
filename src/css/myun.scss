@@ -1,5 +1,5 @@
 #interactive-wrapper{
-	margin:0 10px;
+	margin:0;
 	max-width:620px;
 }
 h1 {
@@ -66,6 +66,7 @@ $category-yellow: #ffbf0d;
 		   background-position: right 5px top 8px;
 		   max-width:140px;
 		   margin:0 5px;
+		   display:inline-block;
 		   @include fs-header(1);
 		   &:first-child{
 			   margin-left:0;
@@ -80,7 +81,7 @@ $category-yellow: #ffbf0d;
 .resolution{
 	box-sizing: border-box;
 	cursor:pointer;
-	border-bottom: 1px solid #EEE;
+	border-top: 1px solid #EEE;
 
 	h4{
 		margin:0;
@@ -97,6 +98,7 @@ $category-yellow: #ffbf0d;
 	p{
 		@include fs-bodyCopy(1);
 		margin: 0 0 1em 0;
+		padding-top:10px;
 	}
 
 	.content-container{
@@ -105,8 +107,8 @@ $category-yellow: #ffbf0d;
 	}
 
 	.resolution-title {
-		font-weight: 100;
-		padding: 4px 0;
+		font-weight: normal;
+		padding: 10px 0;
 
 	}
 
@@ -163,12 +165,35 @@ $category-yellow: #ffbf0d;
     background-size: contain;
     background-repeat: no-repeat;
 	// background-blend-mode: luminosity;
-	min-height: 120px;
+	min-height: 180px;
 
 	@import 'modules/_categories.scss';
 }
-
-@media(min-width:480px){
+@media(min-width:420px){
+	.resolution{
+		position: relative;
+		
+		.resolution-illustration{
+			position: absolute;
+			right:0;
+			width:180px;
+			height:100%;
+			top:0;
+			background-size:70%;
+			min-height:0;
+		}
+		p{
+			padding-right:200px;
+			margin:0;
+			padding-top:0;
+		}
+		&.active{
+			padding-bottom:10px;
+		}
+		
+	}
+}
+@media(min-width:520px){
 	.resolution {
 		width: 40%;
 		padding: 4px;

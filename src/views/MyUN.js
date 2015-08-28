@@ -1,20 +1,6 @@
 var getJSON = require('../js/utils/getjson');
 var Ractive = require('ractive');
 var html = require('../html/myUN.html');
-var svgs = {
-	// weapons: require('../imgs/illustrations/aid.svg'),
-	// democracy: require('../imgs/illustrations/democracy.svg'),
-	// energy: require('../imgs/illustrations/energy.svg'),
-	// food: require('../imgs/illustrations/food.svg'),
-	// aid: require('../imgs/illustrations/aid.svg'),
-	// health: require('../imgs/illustrations/health.svg'),
-	// money: require('../imgs/illustrations/money.svg'),
-	// refugees: require('../imgs/illustrations/refugees.svg'),
-	// rights: require('../imgs/illustrations/rights.svg'),
-	// terrorism: require('../imgs/illustrations/terrorism.svg'),
-	// un: require('../imgs/illustrations/un.svg'),
-}
-
 var countries = require('../data/countries.json');
 var svgs = require('./svgs.js');
 
@@ -32,9 +18,9 @@ var clickedPersona;
 var profiles = [{
 		id: "nigerianwoman",
 		filter: {
-			gender: "Female",
-			country: "Nigeria",
-			age: 12
+			gender: "Male",
+			country: "Vietnam",
+			age: 60
 		},
 		active: true
 	},{
@@ -71,6 +57,7 @@ function init(el){
 
 		var con = {};
 		data = json.sheets.myun.map(function(i){
+			console.log(i);
 
 			// illustrations
 			if (i.HEADLINE.search('missle') > -1) {
@@ -167,9 +154,9 @@ function loadPage(){
 		data: {
 			profiles: profiles,
 			activeFilter: {
-				gender: profiles[0].filter.gender,
-				country: profiles[0].filter.country,
-				age: profiles[0].filter.age
+				gender: "Male",
+				country: "Vietnam",
+				age: 60
 			},
 			resolutions: [],
 			filters: {
@@ -210,40 +197,6 @@ function loadPage(){
 					document.querySelector('.resolution.active .pusher').style.height = margin + 'px';
 				}
 			}
-
-			var paths = document.querySelectorAll('.resolution.active svg path');
-			var max = paths.length;
-			var fadeIn = false;
-			var speed = 300/max;
-
-			function fadeOutSvg(num){
-				setTimeout(function(){
-					paths[num].setAttribute('data-old', paths[num].style.fill);
-					paths[num].style.fill = "#eee";
-					if(num > max-(max/3) && !fadeIn){
-						fadeIn = true;
-						// fadeInSvg(0);
-					}
-					if(paths[num + 1]){
-						num++;
-						fadeOutSvg(num);
-					}else{
-						fadeInSvg(0);
-					}
-				},speed)
-			}
-			function fadeInSvg(num){
-				setTimeout(function(){
-					 paths[num].style.fill = paths[num].getAttribute('data-old');
-
-					if(paths[num + 1]){
-						num++;
-						fadeInSvg(num);
-					}
-				},speed)
-			}
-
-			// fadeOutSvg(0);
 		}
 	})
 }
@@ -264,11 +217,6 @@ function updateResults(){
 		}else{
 			return i.COUNTRIES.filter(function(country){
 				i.orderPriority = i.priority + 3;
-
-
-
-
-
 				return country === filter.country;
 			}).length > 0
 		}
@@ -294,8 +242,7 @@ function updateResults(){
 		analytics('send', 'event', 'UI', 'click-tap', 'Dropdown: ' + filter.country + " - " + filter.age + " - " + filter.gender);
 	}
 	clickedPersona = false;
-	app.set('activeResolution',0)
-	console.log(results);
+	app.set('activeResolution',0);
 	app.set('resolutions', results);
 }
 
