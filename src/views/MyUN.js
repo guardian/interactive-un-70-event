@@ -32,33 +32,33 @@ var clickedPersona;
 var profiles = [{
 		id: "nigerianwoman",
 		filter: {
-			gender: "Female",
-			country: "Nigeria",
-			age: 12
+			gender: "Male",
+			country: "Vietnam",
+			age: 60
 		},
 		active: true
 	},{
 		id: "blabla",
 		filter: {
-			gender: "Male",
-			country: "Congo",
-			age: 17
+			gender: "Female",
+			country: "Democratic Republic of the Congo",
+			age: 55
 		},
 		active: false
 	},{
 		id: "anotherperson",
 		filter: {
 			gender: "Male",
-			country: "Palestine",
-			age: 18
+			country: "Brazil",
+			age: 12
 		},
 		active: false
 	},{
 		id: "andanotherperson",
 		filter: {
 			gender: "Female",
-			country: "UK",
-			age: 23
+			country: "Sweden",
+			age: 9
 		},
 		active: false
 	}
@@ -79,7 +79,7 @@ function init(el){
 			if (i.HEADLINE.search('smallpox') > -1) {
 				i.CATEGORY = 'smallpox';
 			}
-			
+
 
 			if (i.HEADLINE.toLowerCase().search('nuclear') > -1) {
 				i.CATEGORY = 'nuclear';
@@ -108,9 +108,13 @@ function init(el){
 						con[countryName] = true;
 					}
 
-
+					// Normalise country names
 					if (countryName === "DRC") {
 						countryName = "Democratic Republic of the Congo"
+					}
+
+					if (countryName === "CAR") {
+						countryName = "Central African Republic"
 					}
 
 					if (countryName === "São Tomé and Príncipe") {
@@ -126,7 +130,7 @@ function init(el){
 						return country[1].toLowerCase() === countryName.toLowerCase();
 					});
 					if (item.length ===0 ) {
-						// console.log(countryName);
+						console.log(countryName);
 					}
 
 					return countryName;
@@ -198,52 +202,6 @@ function loadPage(){
 		if(e.index.i !== app.get('activeResolution')){
 			app.set('activeResolution',e.index.i);
 			analytics('send', 'event', 'UI', 'click-tap', 'ExpandMission');
-			var resolutionHeight = document.querySelector('.resolution.active .content-container').clientHeight;
-			var illustrationHeight = document.querySelector('.resolution.active .illustration-container').clientHeight + 10;
-			var margin = (resolutionHeight - illustrationHeight)/2;
-			if(margin > 20){
-				if(e.context.CATEGORY === "terrorism"){
-					document.querySelector('.resolution.active .pusher').style.height = (resolutionHeight - illustrationHeight) + 'px';
-				}else if(e.context.CATEGORY === "rights"){
-					document.querySelector('.resolution.active .pusher').style.height = (resolutionHeight - illustrationHeight) + 'px';
-				}else{
-					document.querySelector('.resolution.active .pusher').style.height = margin + 'px';
-				}
-			}
-
-			var paths = document.querySelectorAll('.resolution.active svg path');
-			var max = paths.length;
-			var fadeIn = false;
-			var speed = 300/max;
-
-			function fadeOutSvg(num){
-				setTimeout(function(){
-					paths[num].setAttribute('data-old', paths[num].style.fill);
-					paths[num].style.fill = "#eee";
-					if(num > max-(max/3) && !fadeIn){
-						fadeIn = true;
-						// fadeInSvg(0);
-					}
-					if(paths[num + 1]){
-						num++;
-						fadeOutSvg(num);
-					}else{
-						fadeInSvg(0);
-					}
-				},speed)
-			}
-			function fadeInSvg(num){
-				setTimeout(function(){
-					 paths[num].style.fill = paths[num].getAttribute('data-old');
-
-					if(paths[num + 1]){
-						num++;
-						fadeInSvg(num);
-					}
-				},speed)
-			}
-
-			// fadeOutSvg(0);
 		}
 	})
 }
@@ -257,6 +215,11 @@ function updateResults(){
 			i.orderPriority = 10;
 			return true;
 		}
+		if (filter.country === "Democratic Republic of the Congo" && (i.HEADLINE.toLowerCase().search('peacekeeping') > -1)) {
+			i.orderPriority = 10;
+			return true;
+		}
+
 
 		if(i.COUNTRIES === "all"){
 			i.orderPriority = i.priority;
@@ -264,11 +227,6 @@ function updateResults(){
 		}else{
 			return i.COUNTRIES.filter(function(country){
 				i.orderPriority = i.priority + 3;
-
-
-
-
-
 				return country === filter.country;
 			}).length > 0
 		}
