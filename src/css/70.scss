@@ -1,7 +1,11 @@
 
+body {
+  height: auto !important;
+}
+
 & {
   width: 100%;
-  height: 100%;
+  height: 46;
   position: relative;
   overflow: hidden;
   max-width: 620px;

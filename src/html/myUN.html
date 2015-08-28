@@ -31,16 +31,31 @@
 			</p>
 		</div>
 	</div>
+
 	<div id="resolution-list">
-	{{#each resolutions:i}}
-		<div class="resolution resolution-{{i}} {{#if i===activeResolution}}active{{/if}} category-{{CATEGORY}}" on-click="expandResolution">
-			<h4 class="resolution-title">{{HEADLINE}}</h4>
-			<div class="content-container">
-				<h4 class="content-title">{{HEADLINE}}</h4>
-				<p>{{ACHIEVEMENT}}</p>
-				<div class="resolution-illustration {{ CATEGORY }}" style="background-image: url({{ SVG }});"></div>
+		{{#each resolutions:i}}
+			<div class="resolution resolution-{{i}} {{#if i===activeResolution}}active{{/if}} category-{{CATEGORY}}" on-click="expandResolution">
+				<h4 class="resolution-title">{{HEADLINE}}</h4>
+				<div class="content-container">
+					<h4 class="content-title">{{HEADLINE}}</h4>
+					<p>{{ACHIEVEMENT}}</p>
+					<div class="resolution-illustration {{ CATEGORY }}" style="background-image: url({{ SVG }});"></div>
+				</div>
 			</div>
-		</div>
-	{{/each}}
+		{{/each}}
 	</div>
+
+	<div id="details">
+		{{#each resolutions:i}}
+			<div class="resolution resolution-{{i}} {{#if i===activeResolution}}active{{/if}} category-{{CATEGORY}}">
+				<div class="content-container">
+					<h4 class="content-title">{{HEADLINE}}</h4>
+					<p>{{ACHIEVEMENT}}</p>
+					<div class="resolution-illustration {{ CATEGORY }}" style="background-image: url({{ SVG }});"></div>
+				</div>
+			</div>
+		{{/each}}
+	</div>
+
+
 </div>
