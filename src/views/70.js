@@ -21,7 +21,10 @@ var EventCollection = Backbone.Collection.extend({
 			return console.warn('Unexpected JSON data', json);
 		}
 
+
 		return json.sheets.timeline.map(function(item) {
+			item.YEAR = parseInt(item.YEAR, 10);
+
             if (item.IMAGES) {
                 item.IMAGES = item.IMAGES.replace('"', '');
                 item.IMAGES = item.IMAGES.split(',');
@@ -202,20 +205,10 @@ var BaseView = Backbone.NativeView.extend({
 		this.markerEl = this.el.querySelector( '.gv-timeline-marker' );
 		this.playedEl = this.el.querySelector( '.gv-timeline-played' );
 
-
-
-		// Colour scaling
-		var scale = chroma.scale(['#EEE', '#B6E0FF']);
-
         this.eventViews = this.collection.map(function(eventModel, i, arr) {
 			var eventView = new EventView({ model: eventModel });
 			eventView.parent = this;
             this.el.appendChild( eventView.render().el );
-
-			// eventView.innerEl.setAttribute('style', '-webkit-filter: grayscale(' + (1 - i / (arr.length -1 ) ) * 100 + '%)' );
-			// eventView.innerEl.style.backgroundColor = scale( i / (arr.length -1 ) ).hex();
-
-
             return eventView;
 		}, this);
 
@@ -226,7 +219,8 @@ var BaseView = Backbone.NativeView.extend({
 			this.stepWidth *= 10;
 		}
 
-		this.currentIndex = this.collection.length
+
+
 
 		if ( this.isMobile ) {
 			this.hammer = new Hammer(this.el, { drag_lock_to_axis: true });
@@ -259,8 +253,26 @@ var BaseView = Backbone.NativeView.extend({
 			this.introEl.style.display = 'none';
 		}
 
-		//this.currentIndex = this.collection.length - 1;
-		this.currentIndex = 0;
+
+
+
+		// Get year from URL or default to the beginning
+		var urlRegex = /year=(\d{4})/;
+		var result = urlRegex.exec(location.search);
+
+		if (result && result[1] && parseInt(result[1], 10) > 1945 && parseInt(result[1], 10) < 2016) {
+			var index = 0;
+			this.collection.forEach( function(event, i) {
+				if (event.get('YEAR') === parseInt(result[1], 10)) {
+					index = i;
+				}
+			});
+			console.log(index);
+			this.currentIndex = index;
+
+		} else {
+			this.currentIndex = 0;
+		}
 		this.showCard(this.currentIndex, true);
 		this.nextBtn = this.el.querySelector('.gv-nav-next');
 		this.nextBtn.addEventListener('click', this.navNext.bind(this), false);
