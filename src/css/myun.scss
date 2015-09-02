@@ -169,6 +169,7 @@ $category-yellow: #ffbf0d;
 
 	@import 'modules/_categories.scss';
 }
+
 @media(min-width:420px){
 	.resolution{
 		position: relative;
@@ -193,9 +194,13 @@ $category-yellow: #ffbf0d;
 		
 	}
 }
+@media(max-width:520px){
+	#details {
+		display: none;
+	}
+}
 @media(min-width:520px){
 	.resolution {
-		width: 40%;
 		padding: 4px;
 
 		p{
@@ -230,6 +235,16 @@ $category-yellow: #ffbf0d;
 		}
 	}
 
+
+	#resolution-list {
+		width: 40%;
+		float: left;
+
+		.content-container {
+			display: none;
+		}
+	}
+
 	#profile-selector ul,#profile-filter{
 		float: left;
 	}
@@ -246,19 +261,32 @@ $category-yellow: #ffbf0d;
 		display: block;
 	}
 
-
-	.content-container{
-		position: relative;
-		display: none;
-		background-color: #f1f1f1;
-		position: absolute;
-		top: 0;
-		right: 0;
+	#details {
+		display: block;
 		width: calc(60% - 10px);
-		z-index: 1;
-		box-sizing: border-box;
+		float: left;
+
+		.resolution .content-title {
+			margin: 1em 20px;
+			padding-top: 1em;
+		}
+
+		.resolution {
+			display: none;
+			border: none;
+
+			&.active {
+				display: block;
+			}
+		}
 	}
 
+
+
+	.content-container {
+		background-color: #f1f1f1;
+		box-sizing: border-box;
+	}
 
 	.resolution-illustration {
 		background-size: contain;

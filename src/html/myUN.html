@@ -1,7 +1,7 @@
 <div id="interactive-wrapper">
 	<h1>What's the UN done for you?</h1>
 	<div id="profile-selector">
-		<h2>Select a persona</h2>
+		<h2>Select a persona or enter your own details</h2>
 		<ul id="personas">
 			{{#each profiles}}
 				<li class="persona {{#if JSON.stringify(filter) === JSON.stringify(activeFilter)}}active{{/if}}" on-click="updateProfile"></li>
@@ -33,16 +33,33 @@
 			</p>
 		</div>
 	</div>
+
 	<div id="resolution-list">
-	{{#each resolutions:i}}
-		<div class="resolution resolution-{{i}} {{#if i===activeResolution}}active{{/if}} category-{{CATEGORY}}" on-click="expandResolution">
-			<h4 class="resolution-title">{{HEADLINE}}</h4>
-			<div class="content-container">
-				<h4 class="content-title">{{HEADLINE}}</h4>
-				<div class="resolution-illustration {{ CATEGORY }}" style="background-image: url({{ SVG }});"></div>
-				<p>{{ACHIEVEMENT}}</p>
+
+		{{#each resolutions:i}}
+			<div class="resolution resolution-{{i}} {{#if i===activeResolution}}active{{/if}} category-{{CATEGORY}}" on-click="expandResolution">
+				<h4 class="resolution-title">{{HEADLINE}}</h4>
+				<div class="content-container">
+					<h4 class="content-title">{{HEADLINE}}</h4>
+					<div class="resolution-illustration {{ CATEGORY }}" style="background-image: url({{ SVG }});"></div>
+					<p>{{ACHIEVEMENT}}</p>
+					
+				</div>
 			</div>
-		</div>
-	{{/each}}
+		{{/each}}
 	</div>
+
+	<div id="details">
+		{{#each resolutions:i}}
+			<div class="resolution resolution-{{i}} {{#if i===activeResolution}}active{{/if}} category-{{CATEGORY}}">
+				<div class="content-container">
+					<h4 class="content-title">{{HEADLINE}}</h4>
+					<p>{{ACHIEVEMENT}}</p>
+					<div class="resolution-illustration {{ CATEGORY }}" style="background-image: url({{ SVG }});"></div>
+				</div>
+			</div>
+		{{/each}}
+	</div>
+
+
 </div>

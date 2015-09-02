@@ -26,25 +26,25 @@ var profiles = [{
 	},{
 		id: "blabla",
 		filter: {
-			gender: "Male",
-			country: "Congo",
-			age: 17
+			gender: "Female",
+			country: "Democratic Republic of the Congo",
+			age: 55
 		},
 		active: false
 	},{
 		id: "anotherperson",
 		filter: {
 			gender: "Male",
-			country: "Palestine",
-			age: 18
+			country: "Brazil",
+			age: 12
 		},
 		active: false
 	},{
 		id: "andanotherperson",
 		filter: {
 			gender: "Female",
-			country: "UK",
-			age: 23
+			country: "Sweden",
+			age: 9
 		},
 		active: false
 	}
@@ -66,7 +66,7 @@ function init(el){
 			if (i.HEADLINE.search('smallpox') > -1) {
 				i.CATEGORY = 'smallpox';
 			}
-			
+
 
 			if (i.HEADLINE.toLowerCase().search('nuclear') > -1) {
 				i.CATEGORY = 'nuclear';
@@ -95,9 +95,13 @@ function init(el){
 						con[countryName] = true;
 					}
 
-
+					// Normalise country names
 					if (countryName === "DRC") {
 						countryName = "Democratic Republic of the Congo"
+					}
+
+					if (countryName === "CAR") {
+						countryName = "Central African Republic"
 					}
 
 					if (countryName === "São Tomé and Príncipe") {
@@ -113,7 +117,7 @@ function init(el){
 						return country[1].toLowerCase() === countryName.toLowerCase();
 					});
 					if (item.length ===0 ) {
-						// console.log(countryName);
+						console.log(countryName);
 					}
 
 					return countryName;
@@ -185,18 +189,6 @@ function loadPage(){
 		if(e.index.i !== app.get('activeResolution')){
 			app.set('activeResolution',e.index.i);
 			analytics('send', 'event', 'UI', 'click-tap', 'ExpandMission');
-			var resolutionHeight = document.querySelector('.resolution.active .content-container').clientHeight;
-			var illustrationHeight = document.querySelector('.resolution.active .illustration-container').clientHeight + 10;
-			var margin = (resolutionHeight - illustrationHeight)/2;
-			if(margin > 20){
-				if(e.context.CATEGORY === "terrorism"){
-					document.querySelector('.resolution.active .pusher').style.height = (resolutionHeight - illustrationHeight) + 'px';
-				}else if(e.context.CATEGORY === "rights"){
-					document.querySelector('.resolution.active .pusher').style.height = (resolutionHeight - illustrationHeight) + 'px';
-				}else{
-					document.querySelector('.resolution.active .pusher').style.height = margin + 'px';
-				}
-			}
 		}
 	})
 }
@@ -208,15 +200,16 @@ function updateResults(){
 		// Special case some countries and headlines
 		if (filter.country === 'South Africa' && !!(i.HEADLINE.search('HIV and Aid') > -1)) {
 			i.orderPriority = 10;
-			return true;
 		}
-
+		if (filter.country === "Democratic Republic of the Congo" && (i.HEADLINE.toLowerCase().search('peacekeeping') > -1)) {
+			i.orderPriority = 10;
+		}
 		if(i.COUNTRIES === "all"){
 			i.orderPriority = i.priority;
 			return true
 		}else{
 			return i.COUNTRIES.filter(function(country){
-				i.orderPriority = i.priority + 3;
+				i.orderPriority += i.priority + 3;
 				return country === filter.country;
 			}).length > 0
 		}
