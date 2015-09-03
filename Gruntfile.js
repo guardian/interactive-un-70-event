@@ -227,7 +227,7 @@ module.exports = function (grunt) {
         to: '$1' + toPrefix + assets[path]
       };
     });
-
+    console.log(repalceFiles);
     grunt.config.data.replace.main.replacements = repalceFiles;
     grunt.task.run('replace');
   });

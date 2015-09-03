@@ -15,8 +15,15 @@ var data;
 var app;
 var clickedPersona;
 
+function allAges(){
+	var agesArray = [];
+	for(i=1;i<91;i++){
+		agesArray.push(i);
+	}
+	return agesArray;
+}
+
 var profiles = [{
-		id: "nigerianwoman",
 		filter: {
 			gender: "Male",
 			country: "Vietnam",
@@ -24,7 +31,6 @@ var profiles = [{
 		},
 		active: true
 	},{
-		id: "blabla",
 		filter: {
 			gender: "Female",
 			country: "Democratic Republic of the Congo",
@@ -32,7 +38,6 @@ var profiles = [{
 		},
 		active: false
 	},{
-		id: "anotherperson",
 		filter: {
 			gender: "Male",
 			country: "Brazil",
@@ -40,7 +45,6 @@ var profiles = [{
 		},
 		active: false
 	},{
-		id: "andanotherperson",
 		filter: {
 			gender: "Female",
 			country: "Sweden",
@@ -57,39 +61,15 @@ function init(el){
 
 		var con = {};
 		data = json.sheets.myun.map(function(i){
-			console.log(i);
-
-			// illustrations
-			if (i.HEADLINE.search('missle') > -1) {
-				i.CATEGORY = 'missle';
-			}
-			if (i.HEADLINE.search('smallpox') > -1) {
-				i.CATEGORY = 'smallpox';
-			}
-
-
-			if (i.HEADLINE.toLowerCase().search('nuclear') > -1) {
-				i.CATEGORY = 'nuclear';
-			}
-			if (i.HEADLINE.toLowerCase().search('crimes') > -1) {
-				i.CATEGORY = 'crimes';
-			}
-			if (i.ACHIEVEMENT.toLowerCase().search('election') > -1) {
-				i.CATEGORY = 'election';
-			}
-
-
-
 			i.SVG = svgs[i.CATEGORY];
-
 
 			if(i.COUNTRIES.toLowerCase() === "everyone" || i.COUNTRIES.toLowerCase() === "all"){
 				i.COUNTRIES = "all";
 			}else{
 				i.COUNTRIES = i.COUNTRIES.split(',');
 				i.COUNTRIES = i.COUNTRIES.map(function(country) {
+					
 					var countryName = country.replace(/\r|\n|\t/g, '').trim();
-
 
 					if (!con.hasOwnProperty(countryName)) {
 						con[countryName] = true;
@@ -112,11 +92,14 @@ function init(el){
 						countryName = "Burma"
 					}
 
+					if (countryName === "Mauritiana") {
+						countryName = "Mauritania"
+					}
 
-					var item = countries.filter(function ( country ) {
+					var item = countries.filter(function (country) {
 						return country[1].toLowerCase() === countryName.toLowerCase();
 					});
-					if (item.length ===0 ) {
+					if (item.length === 0 ) {
 						console.log(countryName);
 					}
 
@@ -124,12 +107,6 @@ function init(el){
 				});
 				i.COUNTRIES = i.COUNTRIES.filter(function(country) { return country.trim !== ""; });
 			}
-
-			if (i.CATEGORY.trim() === "") {
-
-			}
-
-			// console.log(i.CATEGORY);
 
 			if(i.AGES.toLowerCase() === "all" || i.AGES.toLowerCase() === "everyone"){
 				i.AGES = "all"
@@ -146,7 +123,6 @@ function init(el){
 			return i;
 		});
 
-		console.log(con);
 		loadPage();
 		// createFilters();
 	});
@@ -165,7 +141,7 @@ function loadPage(){
 			resolutions: [],
 			filters: {
 				COUNTRIES: countries.map(function(country) { return country[1]; } ),
-				AGES: [12,17,18,23,24,25,26,55,60],
+				AGES: allAges(),
 				TYPES: ["Male","Female"]
 			},
 			activeResolution: 0,
@@ -196,26 +172,27 @@ function loadPage(){
 function updateResults(){
 	var filter = app.get('activeFilter');
 	var results = data.filter(function(i){
-
 		// Special case some countries and headlines
 		if (filter.country === 'South Africa' && !!(i.HEADLINE.search('HIV and Aid') > -1)) {
-			i.orderPriority = 10;
+			i.orderPriority = 1;
 		}
-		if (filter.country === "Democratic Republic of the Congo" && (i.HEADLINE.toLowerCase().search('peacekeeping') > -1)) {
-			i.orderPriority = 10;
-		}
+
 		if(i.COUNTRIES === "all"){
 			i.orderPriority = i.priority;
 			return true
 		}else{
 			return i.COUNTRIES.filter(function(country){
-				i.orderPriority += i.priority + 3;
+				if(i.priority < 0){
+					i.orderPriority = -100;
+				}else{
+					i.orderPriority = i.priority - 2;
+				}
 				return country === filter.country;
 			}).length > 0
 		}
+
 	}).filter(function(i){
-		console.log(i.AGES.replace(" and above", ""))
-		return i.AGES === "all" || i.AGES <= filter.age
+		return i.AGES === "all" || filter.age >= Number(i.AGES)
 	}).filter(function(i){
 		if(filter.gender === "Female"){
 			return true
@@ -228,7 +205,21 @@ function updateResults(){
 		  if (a.orderPriority > b.orderPriority)
 		    return -1;
 		  return 0;
-	})
+	}).reverse()
+
+	// function duplicatez(){
+	// 	var list = ['South Africa', 'Botswana', 'India', 'Russia', 'Ukraine', 'Swaziland', 'Thailand', 'Namibia', 'Mozambique', 'Zambia', 'Zimbabwe', 'Democratic Republic of the Congo', 'Uganda', 'Tanzania', 'Lesotho', 'Malawi', 'Nigeria', 'Kenya', 'Gabon', 'Equatorial Guinea', 'Congo', 'Central African Republic', 'Cameroon'];
+	// 	var strippedCountries = [];
+	// 	countries.forEach(function(i,j){
+	// 		if(list.indexOf(i[1]) === -1){
+	// 			strippedCountries.push(i[1]);
+	// 		}
+	// 	})
+	// 	console.log(JSON.stringify(strippedCountries));
+	// }
+
+	// duplicatez();
+	console.log(results)
 	if(clickedPersona){
 		analytics('send', 'event', 'UI', 'click-tap', 'Persona: ' + filter.country + " - " + filter.age + " - " + filter.gender);
 	}else{
@@ -258,7 +249,6 @@ function createFilters(){
 				}
 				else{
 					if(filterValues[category].indexOf(i[category]) === -1){
-						console.log(i[category])
 						if(i[category] !== "Koreas: All Others: 60 and above"){
 							filterValues[category].push(i[category]);
 						}
