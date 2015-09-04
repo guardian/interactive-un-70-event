@@ -139,6 +139,7 @@ function loadPage(){
 				age: 60
 			},
 			resolutions: [],
+			all: data,
 			filters: {
 				COUNTRIES: countries.map(function(country) { return country[1]; } ),
 				AGES: allAges(),
@@ -149,7 +150,11 @@ function loadPage(){
 		},
 		el: el
 	})
-
+	console.log(document.location.hash)
+	if(document.location.hash === "#all"){
+		app.set('all',data);
+		app.set('test','true');
+	}
 	app.on('updateProfile',function(e){
 		clickedPersona = true;
 		app.set('activeFilter', {

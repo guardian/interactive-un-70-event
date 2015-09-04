@@ -31,7 +31,7 @@
 			</p>
 		</div>
 	</div>
-
+	{{#if !test}}
 	<div id="resolution-list">
 
 		{{#each resolutions:i}}
@@ -58,6 +58,18 @@
 			</div>
 		{{/each}}
 	</div>
+	{{/if}}
+
+	{{#if test}}
+		{{#each all:i}}
+			<div class="resolution resolution-{{i}} active category-{{CATEGORY}}">
+					<div class="content-container">
+						<div class="resolution-illustration {{ CATEGORY }}" style="background-image: url({{ SVG }});"></div>
+						{{HEADLINE}} (category: {{CATEGORY}})
+					</div>
+				</div>
+		{{/each}}
+	{{/if}}
 
 
 </div>

@@ -10,6 +10,8 @@ $category-yellow: #ffbf0d;
 &.aid,
 &.health,
 &.food,
+&.globalconference,
+&.millenniumgoals,
 &.refugees,
 &.peace {
 	background-color: $category-green;
@@ -33,32 +35,40 @@ $category-yellow: #ffbf0d;
 &.ebola,
 &.aids,
 &.hiv,
-&.malaria {
+&.malaria,
+&.immunisation {
 	background-color: $category-red;
 }
 
 &.environment,
+&.urbanisation,
+&.environmentconference,
 &.energy,
 &.marine,
 &.greenhouse,
-&.culture
+&.culture,
+&.warningsystem
 	{
 	background-color: $category-yellow;
 }
 
 
 &.womensrights,
+&.womenconference,
 &.rights,
 &.un,
+&.waldheim,
+&.unhq,
 &.middleeast,
 &.children,
 &.money,
+&.fund,
 &.nobel,
 &.lockerbie,
 &.democracy,
 &.monument,
-&.election
-
+&.election,
+&.resolution
 	{
 	background-color: $category-blue;
 }
