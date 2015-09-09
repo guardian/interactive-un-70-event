@@ -212,18 +212,18 @@ function updateResults(){
 		  return 0;
 	}).reverse()
 
-	// function duplicatez(){
-	// 	var list = ['South Africa', 'Botswana', 'India', 'Russia', 'Ukraine', 'Swaziland', 'Thailand', 'Namibia', 'Mozambique', 'Zambia', 'Zimbabwe', 'Democratic Republic of the Congo', 'Uganda', 'Tanzania', 'Lesotho', 'Malawi', 'Nigeria', 'Kenya', 'Gabon', 'Equatorial Guinea', 'Congo', 'Central African Republic', 'Cameroon'];
-	// 	var strippedCountries = [];
-	// 	countries.forEach(function(i,j){
-	// 		if(list.indexOf(i[1]) === -1){
-	// 			strippedCountries.push(i[1]);
-	// 		}
-	// 	})
-	// 	console.log(JSON.stringify(strippedCountries));
-	// }
+	function duplicatez(){
+		var list = ['South Africa', 'Botswana', 'India', 'Russia', 'Ukraine', 'Swaziland', 'Thailand', 'Namibia', 'Mozambique', 'Zambia', 'Zimbabwe', 'Democratic Republic of the Congo', 'Uganda', 'Tanzania', 'Lesotho', 'Malawi', 'Nigeria', 'Kenya', 'Gabon', 'Equatorial Guinea', 'Congo', 'Central African Republic', 'Cameroon'];
+		var strippedCountries = [];
+		countries.forEach(function(i,j){
+			// if(list.indexOf(i[1]) === -1){
+				strippedCountries.push(i[1]);
+			// }
+		})
+		console.log(JSON.stringify(strippedCountries));
+	}
 
-	// duplicatez();
+	duplicatez();
 	console.log(results)
 	if(clickedPersona){
 		analytics('send', 'event', 'UI', 'click-tap', 'Persona: ' + filter.country + " - " + filter.age + " - " + filter.gender);
