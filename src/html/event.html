@@ -1,13 +1,11 @@
 <div class="gv-event gv-event-scale-{{ Hierarchy }} gv-event-{{CATEGORY}}">
+	<div class="gv-event-footer {{CATEGORY}}" style="background-image: url({{ svg }})"></div>
     <p class="gv-event-year"> {{ YEAR }} </p>
 	<p class="gv-event-text"> {{ HEADLINE }} </p>
     <div class="gv-event-content">
         {{#IMAGES}}
             <img src="{{ . }}" width="640" alt="" class="gv-event-images" />
         {{/IMAGES}}
-
         <p class="gv-event-copy"> {{ EVENT }} </p>
-    </div>
-
-    <div class="gv-event-footer {{CATEGORY}}" style="background-image: url({{ svg }})"></div>
+    </div> 
 </div>
