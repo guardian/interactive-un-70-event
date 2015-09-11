@@ -36,9 +36,9 @@
 
 		{{#each resolutions:i}}
 			<div class="resolution resolution-{{i}} {{#if i===activeResolution}}active{{/if}} category-{{CATEGORY}}" on-click="expandResolution">
-				<h4 class="resolution-title">{{HEADLINE}}</h4>
+					<h4 class="resolution-title">{{HEADLINE}}</h4>
+					<h4 class="resolution-title resolution-title-wide">{{WORDING}}</h4>
 				<div class="content-container">
-					<h4 class="content-title">{{HEADLINE}}</h4>
 					<div class="resolution-illustration {{ CATEGORY }}" style="background-image: url({{ SVG }});"></div>
 					<p>{{ACHIEVEMENT}}</p>
 					
@@ -52,7 +52,7 @@
 			<div class="resolution resolution-{{i}} {{#if i===activeResolution}}active{{/if}} category-{{CATEGORY}}">
 				<div class="content-container">
 					<div class="resolution-illustration {{ CATEGORY }}" style="background-image: url({{ SVG }});"></div>
-					<h4 class="content-title">{{HEADLINE}}</h4>
+					<h4 class="content-title">{{WORDING}}</h4>
 					<p>{{ACHIEVEMENT}}</p>
 				</div>
 			</div>

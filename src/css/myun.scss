@@ -141,12 +141,16 @@ $category-yellow: #ffbf0d;
 	.content-container{
 		display: none;
 		box-sizing: border-box;
+		position: relative;
 	}
 
 	.resolution-title {
 		font-weight: normal;
 		padding: 5px 0 20px;
+	}
 
+	.resolution-title-wide{
+		display:none;
 	}
 
 	.content-title {
@@ -166,6 +170,12 @@ $category-yellow: #ffbf0d;
 
 		.resolution-title {
 			font-weight: 700;
+		}
+		.resolution-title{
+			display:none;
+		}
+		.resolution-title.resolution-title-wide{
+			display:block;
 		}
 
 		.wrap{
@@ -220,7 +230,7 @@ $category-yellow: #ffbf0d;
 			position: absolute;
 			right:0;
 			width:180px;
-			height:calc(100% - 55px);
+			height:100%;
 			background-size:70%;
 			min-height:0;
 		}
@@ -267,6 +277,10 @@ $category-yellow: #ffbf0d;
 			.resolution-title {
 				font-weight: 700;
 				position: relative;
+				display:block;
+			}
+			.resolution-title.resolution-title-wide{
+				display:none;
 			}
 			.content-container{
 				padding-bottom:14px;

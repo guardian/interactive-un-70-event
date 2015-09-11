@@ -17,7 +17,7 @@ module.exports = {
 	terrorism: '/imgs/illustrations/terrorism.svg',
 	un: '/imgs/illustrations/un-charter.svg',
 	unhq: '/imgs/illustrations/un-hq.svg',
-	resolution: '/imgs/illustrations/un-charter.svg',
+	resolutions: '/imgs/illustrations/un-charter.svg',
 	weapons: '/imgs/illustrations/weapons.svg',
 	war: '/imgs/illustrations/soldier.svg',
 	peace: '/imgs/illustrations/peace.svg',
