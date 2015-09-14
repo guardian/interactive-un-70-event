@@ -21,7 +21,7 @@
 						<option value="{{.}}">{{{.}}}</option>
 					{{/each}}
 				</select>
-				year{{#if activeFilter.age > 1}}s{{/if}} old, living in
+				year{{#if activeFilter.age > 1}}s{{/if}} old,<br />living in
 				<select value='{{activeFilter.country}}'>
 					{{#each filters.COUNTRIES}}
 						<option value="{{.}}">{{{.}}}</option>

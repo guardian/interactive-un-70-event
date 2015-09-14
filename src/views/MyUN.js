@@ -39,16 +39,17 @@ var profiles = [{
 		active: false
 	},{
 		filter: {
-			gender: "Male",
-			country: "Brazil",
-			age: 12
-		},
-		active: false
-	},{
-		filter: {
 			gender: "Female",
 			country: "Sweden",
 			age: 9
+		},
+		active: false
+	},
+	{
+		filter: {
+			gender: "Male",
+			country: "Brazil",
+			age: 12
 		},
 		active: false
 	}
