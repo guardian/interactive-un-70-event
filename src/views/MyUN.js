@@ -68,7 +68,7 @@ function init(el){
 			}else{
 				i.COUNTRIES = i.COUNTRIES.split(',');
 				i.COUNTRIES = i.COUNTRIES.map(function(country) {
-					
+
 					var countryName = country.replace(/\r|\n|\t/g, '').trim();
 
 					if (!con.hasOwnProperty(countryName)) {
@@ -123,6 +123,7 @@ function init(el){
 			return i;
 		});
 
+
 		loadPage();
 		// createFilters();
 	});
@@ -165,6 +166,16 @@ function loadPage(){
 	})
 
 	app.observe('activeFilter',updateResults);
+
+	app.on('shareTwitter', function(e) {
+		var twitterBaseUrl = 'https://twitter.com/intent/tweet?text=';
+		var shortURL = 'http://gu.com/xxxx';
+		var resolutionCount = e.context.resolutions.length;
+		var twitterMessage = 'The UN\'s helped me in ' + resolutionCount + ' ways. How about you? #UNfuture ' + shortURL;
+		var shareWindow = twitterBaseUrl + encodeURIComponent(twitterMessage)
+		window.open(shareWindow, 'Twitter share', 'width=640,height=320');
+
+	});
 
 	app.on('expandResolution',function(e){
 		if(e.index.i !== app.get('activeResolution')){

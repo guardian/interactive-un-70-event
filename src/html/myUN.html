@@ -9,7 +9,7 @@
 		</ul>
 		<div id="profile-filter">
 			<p>
-				A 
+				A
 				<select value='{{activeFilter.gender}}' class="filter-gender">
 					{{#each filters.TYPES}}
 						<option value="{{.}}">{{{.}}}</option>
@@ -27,9 +27,11 @@
 						<option value="{{.}}">{{{.}}}</option>
 					{{/each}}
 				</select>
-				
+
 			</p>
 		</div>
+
+		<button class="share" on-click="shareTwitter" data-network="twitter">Tweet</button>
 	</div>
 	{{#if !test}}
 	<div id="resolution-list">
@@ -41,7 +43,7 @@
 				<div class="content-container">
 					<div class="resolution-illustration {{ CATEGORY }}" style="background-image: url({{ SVG }});"></div>
 					<p>{{ACHIEVEMENT}}</p>
-					
+
 				</div>
 			</div>
 		{{/each}}
