@@ -101,7 +101,7 @@ function init(el){
 						return country[1].toLowerCase() === countryName.toLowerCase();
 					});
 					if (item.length === 0 ) {
-						console.log(countryName);
+						//console.log(countryName);
 					}
 
 					return countryName;
@@ -181,6 +181,7 @@ function loadPage(){
 	app.on('expandResolution',function(e){
 		if(e.index.i !== app.get('activeResolution')){
 			app.set('activeResolution',e.index.i);
+			e.node.scrollIntoView();
 			analytics('send', 'event', 'UI', 'click-tap', 'ExpandMission');
 		}
 	})
@@ -232,11 +233,9 @@ function updateResults(){
 				strippedCountries.push(i[1]);
 			// }
 		})
-		console.log(JSON.stringify(strippedCountries));
 	}
 
 	duplicatez();
-	console.log(results)
 	if(clickedPersona){
 		analytics('send', 'event', 'UI', 'click-tap', 'Persona: ' + filter.country + " - " + filter.age + " - " + filter.gender);
 	}else{
