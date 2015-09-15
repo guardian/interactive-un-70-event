@@ -181,7 +181,9 @@ function loadPage(){
 	app.on('expandResolution',function(e){
 		if(e.index.i !== app.get('activeResolution')){
 			app.set('activeResolution',e.index.i);
-			e.node.scrollIntoView();
+			if (window.innerWidth < 460) {
+				e.node.scrollIntoView();
+			}
 			analytics('send', 'event', 'UI', 'click-tap', 'ExpandMission');
 		}
 	})
