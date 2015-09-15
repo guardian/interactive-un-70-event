@@ -161,7 +161,7 @@ background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53
 	h4{
 		margin:0;
 		@include fs-header(2);
-		// line-height: 1em;
+		line-height: 1em;
 	}
 	h5{
 		@include fs-header(1);
