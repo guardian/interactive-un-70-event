@@ -170,7 +170,7 @@ function loadPage(){
 
 	app.on('shareTwitter', function(e) {
 		var twitterBaseUrl = 'https://twitter.com/intent/tweet?text=';
-		var shortURL = 'http://gu.com/xxxx';
+		var shortURL = 'http://gu.com/p/4capv';
 		var resolutionCount = e.context.resolutions.length;
 		var twitterMessage = 'The UN\'s helped me in ' + resolutionCount + ' ways. How about you? #UNfuture ' + shortURL;
 		var shareWindow = twitterBaseUrl + encodeURIComponent(twitterMessage)
