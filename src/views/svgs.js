@@ -45,7 +45,7 @@ module.exports = {
 	womenconference: '/imgs/illustrations/women-conference.svg',
 	urbanisation: '/imgs/illustrations/urbanisation.svg',
 	globalconference: '/imgs/illustrations/global-conference.svg',
-	millenniumgoals: '/imgs/illustrations/millennium-goals.svg',
+	millenniumgoals: '/imgs/illustrations/immunisation.svg',
 	fireworks: '/imgs/illustrations/fireworks.gif',
 	poverty: '/imgs/illustrations/poverty.svg'
 };
